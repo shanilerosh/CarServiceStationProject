@@ -477,7 +477,7 @@ public class PaymentController implements Initializable {
             Map<String,Object> para=new HashMap<>();
             para.put("PaymentID", pid);
             JasperPrint jp=JasperFillManager.fillReport(ja,para,DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(jp);
+            JasperViewer.viewReport(jp,false);
     
     }
 

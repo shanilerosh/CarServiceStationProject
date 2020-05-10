@@ -50,6 +50,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.control.textfield.TextFields;
@@ -715,8 +716,7 @@ public class OrderController implements Initializable {
             para.put("OrderID", oid);
             para.put("oidValueForTable", oid);
             JasperPrint jp=JasperFillManager.fillReport(ja,para,DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(jp);
-            //JasperPrintManager.printReport(jp, false);
+            JasperViewer.viewReport(jp,false);
     } 
 
     

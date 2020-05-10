@@ -534,7 +534,7 @@ public class GRNController implements Initializable {
             para.put("grID", grn);
             para.put("GRNValueForTable", grn);
             JasperPrint jp=JasperFillManager.fillReport(ja,para,DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(jp);
+            JasperViewer.viewReport(jp,false);
     }
 
 }

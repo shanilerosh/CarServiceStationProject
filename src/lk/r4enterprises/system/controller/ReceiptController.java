@@ -470,7 +470,7 @@ public class ReceiptController implements Initializable{
             Map<String,Object> para=new HashMap<>();
             para.put("ReceiptID", rid);
             JasperPrint jp=JasperFillManager.fillReport(ja,para,DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(jp);
+            JasperViewer.viewReport(jp,false);
     }
     
 
