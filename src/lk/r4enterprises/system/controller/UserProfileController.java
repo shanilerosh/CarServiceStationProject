@@ -103,46 +103,44 @@ public class UserProfileController implements Initializable {
     private void btnUpdate_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
         boolean showConfMessage = AlertBox.showConfMessage("Are you sure to Update", "Update Confirmation");
         if (showConfMessage && validateFieds()) {
-            if (!user.getRole().equals("Admin")) {
-                boolean isSucess = updateUser(new User(txtUid.getText(), txtNUserName.getText(), pwdNewPass.getText(), user.getRole(), user.getStatus()));
-                if (isSucess) {
-                    AlertBox.showDisplayMessage("Sucess", txtNUserName.getText() + " updated.You must login with the valid credentials now.Please press okay to exit the system.So that you can login again");
-                    System.exit(0);
+
+            if (user.getRole().equals("Admin")) {
+                if(!tblUser.getSelectionModel().isEmpty()){
+                    if(!user.getUid().equals(tblUser.getSelectionModel().getSelectedItem().getUid())){
+                    updateNonAdminsByAdmin(new User(comboRole.getSelectionModel().getSelectedItem(), txtUid.getText()));
+                    AlertBox.showDisplayMessage("Sucess",user.getUid()+" role has been Changed");
+                    }
                 }
-            }else if(tblUser.getSelectionModel().getSelectedItem().getUid().equals(user.getUid())) {
-                if (!user.getRole().equals(comboRole.getSelectionModel().getSelectedItem())) {
+                else if(!user.getRole().equals(comboRole.getSelectionModel().getSelectedItem())) {
                     AlertBox.showErrorMessage("Error", "You are an Admin.An admin is mandatory.You cannot change your own role");
-                } else {
+                }else {
                     boolean isSucess = updateUser(new User(txtUid.getText(), txtNUserName.getText(), pwdNewPass.getText(), user.getRole(), user.getStatus()));
                     if (isSucess) {
                         AlertBox.showDisplayMessage("Sucess", txtNUserName.getText() + " has been updated");
                     }
                 }
-            }else if(!tblUser.getSelectionModel().getSelectedItem().getUid().equals(user.getUid())){
-                User updatedNonAdminUser = new User(comboRole.getSelectionModel().getSelectedItem(), txtUid.getText());
-                boolean isSave = updateNonAdminsByAdmin(updatedNonAdminUser);
-                System.out.println("Comeshere2");
-                System.out.println(isSave);
-                if (isSave) {
-                    AlertBox.showDisplayMessage("Sucess", txtUid.getText() + " only the role has been changed");
-                } else {
-                    AlertBox.showErrorMessage("Error", "Try again");
+            } else {
+                boolean isSucess = updateUser(new User(txtUid.getText(), txtNUserName.getText(), pwdNewPass.getText(), user.getRole(), user.getStatus()));
+                if (isSucess) {
+                    AlertBox.showDisplayMessage("Sucess", txtNUserName.getText() + " updated.You must login with the valid credentials now.Please press okay to exit the system.");
+                    System.exit(0);
                 }
-                                      
+
             }
-        
+
         }
+
         loadTable();
 
     }
 
     @FXML
     private void comboCategory_onKeyPressed(KeyEvent event) {
-        
+
     }
 
     @FXML
-    private void btnDelete_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException{
+    private void btnDelete_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
         if (tblUser.getSelectionModel().isEmpty()) {
             AlertBox.showErrorMessage("Error", "Make a selection in order to do a Delete Operation");
         } else {
@@ -157,7 +155,7 @@ public class UserProfileController implements Initializable {
                         clearFields();
                         loadTable();
                     } else {
-                        AlertBox.showErrorMessage("Error", "Try again");   
+                        AlertBox.showErrorMessage("Error", "Try again");
                     }
                 }
             }
@@ -181,7 +179,6 @@ public class UserProfileController implements Initializable {
             clearFields();
         } else if (validateFieds()) {
             boolean confMessage = AlertBox.showConfMessage("Are you sure to create a new User", "Create New User");
-            System.out.println("Confimation " + confMessage);
             if (confMessage) {
                 User myUsr = new User(getNewUserId(), txtNUserName.getText(), pwdNewPass.getText(), comboRole.getSelectionModel().getSelectedItem(), "Active");
                 boolean isSave = createNewUser(myUsr);
@@ -304,8 +301,10 @@ public class UserProfileController implements Initializable {
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         try {
             loadTable();
+
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserProfileController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -483,6 +482,9 @@ public class UserProfileController implements Initializable {
         txtNUserName.clear();
         pwdNewPass.setVisible(true);
         pwdRetypeNewPwd.setVisible(true);
+        pwdNewPass.clear();
+        pwdRetypeNewPwd.clear();
+        txtNUserName.setEditable(true);
     }
 
     @FXML

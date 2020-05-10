@@ -162,6 +162,7 @@ public class SupplierController implements Initializable {
             if(deleteSupplier()){
                 AlertBox.showDisplayMessage("Sucessful", txtSid.getText()+
                         " succesfully deleted.");
+                loadSuppliers();
             }else{
                  AlertBox.showErrorMessage("Error", "Try again with correct"
                         + " Selection");
@@ -241,9 +242,7 @@ public class SupplierController implements Initializable {
         try {
             loadSuppliers();
             clearFielsAndLoadAgain();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

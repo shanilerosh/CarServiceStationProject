@@ -82,10 +82,5 @@
             <Font name="Roboto Condensed Regular" size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="bttnReport" layoutX="503.0" layoutY="310.0" mnemonicParsing="false" onAction="#bttnReport_OnAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #2D9069;" text="Create" textFill="WHITE">
-         <font>
-            <Font name="Roboto Condensed Regular" size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

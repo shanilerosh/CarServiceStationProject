@@ -334,24 +334,7 @@ public class ReceiptController implements Initializable{
         String sql="DELETE FROM Receipt WHERE rid=?";
         PreparedStatement ps=con.prepareStatement(sql);
         ps.setString(1, tblReceiptData.getSelectionModel().getSelectedItem().getRid());
-        boolean isDelete= ps.executeUpdate()>0;
-       
-        if(isDelete){
-            sql="DELETE FROM AccountTransaction WHERE docId=?";
-            ps=con.prepareStatement(sql);
-            ps.setString(1, txtReceipt.getText());
-            isDelete=ps.executeUpdate()>0;
-            if(isDelete){
-                con.commit();
-            }else{
-                con.rollback();
-            }
-        }else{
-            con.rollback();
-        }
-        
-        con.setAutoCommit(true);
-        return isDelete;
+        return ps.executeUpdate()>0;
     }
 
     private ObservableList<ReceiptTableModel> loadReceiptByFields(String value) throws

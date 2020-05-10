@@ -5,18 +5,13 @@
  */
 package lk.r4enterprises.system.controller;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,13 +35,7 @@ import lk.r4enterprises.system.model.ReportTableModel;
 import lk.r4enterprises.system.model.User;
 import lk.r4enterprises.system.view.AlertBox;
 import lk.r4enterprises.system.view.AnimateComponent;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperReport;
-import lk.r4enterprises.system.view.CarServiceStationProject;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
+
 
 /**
  *
@@ -96,8 +85,6 @@ public class CustomerController implements Initializable    {
     private TextField txtName;
     
     private User userInformation;
-    @FXML
-    private Button bttnReport;
 
     public void setUserInformation(User userInformation) {
         this.userInformation = userInformation;
@@ -535,23 +522,6 @@ public class CustomerController implements Initializable    {
     }
 
 
-    @FXML
-    private void bttnReport_OnAction(ActionEvent event) {
-        try {
-            InputStream inputStream=new FileInputStream("/home/shanil/NetBeansProjects/CarServiceStationProject/src/reports/ItemWiseReport.jrxml");
-            System.out.println(inputStream.toString());
-            Map<String,Object> parm=new HashMap<>();
-            parm.put("fromDate", "2020-05-01");
-            parm.put("toDate","2020-05-08");
-            JasperReport jasperReport=JasperCompileManager.compileReport(inputStream);
-            JasperPrint fillReport = JasperFillManager.fillReport(jasperReport, parm,DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(fillReport,false);
-                    } catch (JRException | ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     ObservableList<ReportTableModel> getReceivableCustomer() throws ClassNotFoundException, SQLException {
         ObservableList<ReportTableModel> list=FXCollections.observableArrayList();

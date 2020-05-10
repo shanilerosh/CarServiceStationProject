@@ -16,7 +16,7 @@ import javafx.stage.StageStyle;
  *
  * @author shanil
  */
-public class CarServiceStationProject extends Application {
+public class CarServiceStationProject extends Application{
     
     private double x,y;
     

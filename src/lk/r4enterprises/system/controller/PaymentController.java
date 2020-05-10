@@ -307,24 +307,7 @@ public class PaymentController implements Initializable {
         String sql="DELETE FROM Payment WHERE pid=?";
         PreparedStatement ps=con.prepareStatement(sql);
         ps.setString(1, tblPaymentData.getSelectionModel().getSelectedItem().getPid());
-        boolean isDelete= ps.executeUpdate()>0;
-       
-        if(isDelete){
-            sql="DELETE FROM AccountTransaction WHERE docId=?";
-            ps=con.prepareStatement(sql);
-            ps.setString(1, txtPayId.getText());
-            isDelete=ps.executeUpdate()>0;
-            if(isDelete){
-                con.commit();
-            }else{
-                con.rollback();
-            }
-        }else{
-            con.rollback();
-        }
-        
-        con.setAutoCommit(true);
-        return isDelete;
+        return ps.executeUpdate()>0;
     }
     
     

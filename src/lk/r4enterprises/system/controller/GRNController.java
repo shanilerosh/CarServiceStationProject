@@ -495,7 +495,7 @@ public class GRNController implements Initializable {
 
     ObservableList<ReportTableModel> getSupplierWisePurchase(String dateFrom, String dateTo) throws ClassNotFoundException, SQLException {
         ObservableList<ReportTableModel> list=FXCollections.observableArrayList();
-        PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT SupplierDetail.sid,SUM(SupplierDetail.quantity),SUM(SupplierDetail.amount*SupplierDetail.quantity) FROM SupplierDetail INNER JOIN GRNMaster ON SupplierDetail.GRN=GRNMaster.GRN WHERE GRNMaster.GRDate BETWEEN ? AND ? GROUP BY sid");
+        PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT GRNMaster.sid,SUM(SupplierDetail.quantity),SUM(SupplierDetail.amount*SupplierDetail.quantity) FROM SupplierDetail INNER JOIN GRNMaster ON SupplierDetail.GRN=GRNMaster.GRN WHERE GRNMaster.GRDate BETWEEN ? AND ? GROUP BY sid");
         ps.setString(1, dateFrom);
         ps.setString(2, dateTo);
         ResultSet rs = ps.executeQuery();
