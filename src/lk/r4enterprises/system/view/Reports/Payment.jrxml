@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2dc5a896-a3e9-47eb-bf96-2e0e13f9e93e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F5F5DC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 14">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 14_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 14_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 14_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 15">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 15_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 15_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 15_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 16">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 16_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 16_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 16_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="ItemListing" uuid="695fc1dc-23a5-4136-892c-fecd7b367526">
+		<parameter name="oidValueForTable" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     OrderDetail.`quantity` AS OrderDetail_quantity,
+     OrderDetail.`itemPrice` AS OrderDetail_itemPrice,
+     Item.`name` AS Item_name,
+     Item.`unitprice` AS Item_unitprice,
+     Item.`model` AS Item_model,
+     OrderDetail.`quantity`*OrderDetail.`itemPrice` AS Total
+FROM
+     `Item` Item INNER JOIN `OrderDetail` OrderDetail ON Item.`iid` = OrderDetail.`iid`
+WHERE 
+OrderDetail.`oid`=$P{oidValueForTable};]]>
+		</queryString>
+		<field name="OrderDetail_quantity" class="java.lang.Double"/>
+		<field name="OrderDetail_itemPrice" class="java.lang.Double"/>
+		<field name="Item_name" class="java.lang.String"/>
+		<field name="Item_unitprice" class="java.lang.Double"/>
+		<field name="Item_model" class="java.lang.String"/>
+		<field name="Total" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="PaymentID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     Payment.`pid` AS Payment_pid,
+     Payment.`amount` AS Payment_amount,
+     Payment.`pType` AS Payment_pType,
+     Payment.`dateOfPayment` AS Payment_dateOfPayment,
+     Payment.`supplierInvoiceNumber` AS Payment_supplierInvoiceNumber,
+     Supplier.`name` AS Supplier_name,
+     Supplier.`mobile` AS Supplier_mobile,
+     Supplier.`email` AS Supplier_email
+FROM
+     `Supplier` Supplier INNER JOIN `Payment` Payment ON Supplier.`sid` = Payment.`sid`
+WHERE
+     Payment.`pid` = $P{PaymentID};]]>
+	</queryString>
+	<field name="Payment_pid" class="java.lang.String"/>
+	<field name="Payment_amount" class="java.lang.Double"/>
+	<field name="Payment_pType" class="java.lang.String"/>
+	<field name="Payment_dateOfPayment" class="java.sql.Date"/>
+	<field name="Payment_supplierInvoiceNumber" class="java.lang.String"/>
+	<field name="Supplier_name" class="java.lang.String"/>
+	<field name="Supplier_mobile" class="java.lang.String"/>
+	<field name="Supplier_email" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="179" splitType="Stretch">
+			<staticText>
+				<reportElement style="table" mode="Transparent" x="266" y="48" width="153" height="20" uuid="5a538c3f-8559-4135-84f4-139c33406025"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier ID : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 6_TD" x="266" y="67" width="153" height="20" uuid="3927a578-0cd2-4ffe-8675-5ad2b72c728a"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Date : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table" x="266" y="87" width="153" height="20" uuid="ec19cbcf-b885-4374-b93c-cfd0791c5ad3"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier Name : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table" x="420" y="48" width="123" height="20" uuid="1a6fb600-3438-4f04-9332-fbb120e33d7f"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{Payment_pid}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement style="table" x="420" y="68" width="123" height="20" uuid="822819d9-335f-45aa-ab76-c5ca0d3bb5e0"/>
+				<textFieldExpression><![CDATA[$F{Payment_dateOfPayment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table" x="420" y="88" width="123" height="20" uuid="6d146b7a-ff52-4efc-94f6-d854ae8cd68f"/>
+				<textFieldExpression><![CDATA[$F{Supplier_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="29" width="153" height="76" uuid="e12a77fd-5966-41c4-8c60-500c3e39553e"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[No.14,
+Puttalam Road,
+Periyamulla,
+Negombo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="32" uuid="2da5d46b-9667-4816-a96c-e47237881bc9"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R4 Enterprises]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="0" width="185" height="32" uuid="9bf30b10-c96d-4d45-941d-8520e11df9c3"/>
+				<textElement textAlignment="Right">
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment SLIP]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table" x="420" y="108" width="123" height="20" uuid="12104f0b-c3ad-44bf-9588-b3eb2c3ad73b"/>
+				<textFieldExpression><![CDATA[$F{Supplier_mobile}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table" x="266" y="107" width="153" height="20" uuid="ec66a463-ace8-4aca-b252-b88d2c90c4fe"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier Mobile :]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table" x="420" y="129" width="123" height="20" uuid="99846733-61e0-42fb-819a-4b42501cc908"/>
+				<textFieldExpression><![CDATA[$F{Supplier_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table" x="266" y="128" width="153" height="20" uuid="062624ff-b080-4629-9e9d-f134a4144e32"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier Email :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="6" width="136" height="20" uuid="3945651d-cd6b-467e-a936-3ff7212fa6db"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Supplier Name :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="37" width="136" height="20" uuid="20e2ea55-d5fd-4f9c-8f8f-db71e8eb59e7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Amount :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="7" width="100" height="20" uuid="4ec503ec-e635-40e6-8821-16d92524543e"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Payment Type :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="67" width="136" height="20" uuid="673c9ff7-ef71-4c25-86e8-b02cbb27b270"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Narration :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="166" y="6" width="158" height="20" uuid="81948c9d-80f1-4dc7-8fb2-9f58b198d04d"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Supplier_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="166" y="37" width="181" height="20" uuid="50c8ee13-343d-476e-950d-7fa80ad68b7d"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Payment_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="67" width="340" height="20" uuid="d6bec8ca-7f86-4a8b-99c4-e554bf109304"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Payment_supplierInvoiceNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="462" y="6" width="81" height="20" uuid="117062b2-c91a-4c0e-b7dd-fa50a7ebc7d7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Payment_pType}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="70" splitType="Stretch">
+			<line>
+				<reportElement x="412" y="11" width="150" height="1" uuid="c9f307ae-34e9-4184-bf23-780c015e6009"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="6" y="11" width="173" height="1" uuid="653a26c6-8a76-4ed5-b0bf-2f4b2609bd2b"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="420" y="19" width="130" height="20" uuid="5d599412-ba16-49c0-a70a-52d3c8674b45"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Cashier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="19" width="130" height="20" uuid="acc6f239-c4cb-4186-a50e-f986182cf980"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Customer Signature]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="6" y="0" width="544" height="50" uuid="fdd1284c-b5c3-4850-a14a-bc145b1447db"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[This document is presented to the supplier as a proof for the payment made.]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="134">
+			<staticText>
+				<reportElement x="265" y="7" width="132" height="20" uuid="79d59c43-beda-4af9-8af2-a853d6421879"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Amount]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement style="table_TH" x="419" y="5" width="116" height="20" uuid="6f9b217e-e172-48d7-9b15-93ac3428a509"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Payment_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

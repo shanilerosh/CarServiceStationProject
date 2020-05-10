@@ -1,0 +1,48 @@
+.button{
+        
+    -fx-background-color: #202940;
+    -fx-background-radius: 8;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto Condensed";
+    
+}
+
+.button:hover{
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-background-radius: 8;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto Condensed";
+    
+}
+
+.button:pressed{
+    -fx-background-color: #8E3A9F;
+    -fx-background-radius: 8;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-rotate: 5;
+    
+}
+
+.text-field {
+  -fx-border-color: grey;
+  -fx-border-width: 0 0 1 0;
+  -fx-background-color: transparent;
+  -fx-font-family: "Roboto Condensed";
+}
+
+.text-field:focused {
+  -fx-border-color: #8E3A9F;
+  -fx-border-width: 0 0 2 0;
+  -fx-background-color: transparent;
+}
+
+#iconMinimize:hover{
+    -fx-cursor: hand;
+}
+
+#iconClose:hover{
+    -fx-cursor: hand;
+}

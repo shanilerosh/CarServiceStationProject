@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mainPane_onMouseClicked" prefHeight="659.0" prefWidth="832.0" style="-fx-background-color: #1A2035;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.r4enterprises.system.controller.OrderController">
+   <children>
+      <AnchorPane layoutX="30.0" layoutY="89.0" prefHeight="148.0" prefWidth="772.0" style="-fx-background-radius: 6px; -fx-background-color: #202940;">
+         <children>
+            <AnchorPane layoutX="14.0" layoutY="-32.0" prefHeight="59.0" prefWidth="746.0" style="-fx-background-color: #8E3A9F; -fx-background-radius: 6px;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Details " AnchorPane.topAnchor="-3.0">
+                     <font>
+                        <Font name="Roboto Condensed Regular" size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter the Order to proceed">
+                     <font>
+                        <Font name="Roboto Condensed Regular" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <TextField fx:id="txtName" layoutX="14.0" layoutY="56.0" onKeyPressed="#txtName_OnKeyPressed" onKeyTyped="#txtName_OnKeyTyped" prefHeight="31.0" prefWidth="336.0" promptText="Customer Name">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font></TextField>
+            <TextField fx:id="txtMobile" layoutX="382.0" layoutY="56.0" onKeyPressed="#txtMobile_OnKeyPressed" onKeyTyped="#txtMobile_OnKeyTyped" prefHeight="31.0" prefWidth="368.0" promptText="Mobile Number">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font></TextField>
+            <TextField fx:id="txtAddress" layoutX="14.0" layoutY="100.0" onKeyPressed="#txtAddress_onKeyPressed" prefHeight="31.0" prefWidth="336.0" promptText="Address">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font></TextField>
+            <TextField fx:id="txtVehicleRegistrationNumber" layoutX="384.0" layoutY="100.0" onKeyPressed="#txtVehicleRegistrationNumber_OnKeyPressed" prefHeight="31.0" prefWidth="179.0" promptText="Vehicle Registration No.">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtModel" layoutX="574.0" layoutY="100.0" onKeyPressed="#txtModel_onKeyPressed" prefHeight="31.0" prefWidth="166.0" promptText="Model">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblOrder" layoutX="36.0" layoutY="326.0" onMouseClicked="#tblOrder_onMouseClicked" prefHeight="148.0" prefWidth="761.0">
+        <columns>
+            <TableColumn fx:id="colRowCount" prefWidth="46.0" text="#" />
+          <TableColumn fx:id="colItemModel" prefWidth="88.0" text="Item Model" />
+          <TableColumn fx:id="colItemName" prefWidth="187.0" text="Item Name" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="129.0" text="Unit Price" />
+            <TableColumn fx:id="colQuantity" prefWidth="104.0" text="Quantity" />
+            <TableColumn fx:id="colTotal" prefWidth="252.0" text="Item Total" />
+        </columns>
+      </TableView>
+      <Text fill="WHITE" layoutX="468.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total  Value :">
+         <font>
+            <Font name="Roboto Condensed Regular" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="469.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discounts :">
+         <font>
+            <Font name="Roboto Condensed Regular" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="468.0" layoutY="573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Net Value :">
+         <font>
+            <Font name="Roboto Condensed Regular" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtItemModel" layoutX="36.0" layoutY="274.0" onKeyPressed="#txtItemModel_onKeyPressed" prefHeight="31.0" prefWidth="346.0" promptText="Item Model">
+         <font>
+            <Font name="Roboto Condensed Regular" size="15.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtQuantity" layoutX="404.0" layoutY="274.0" onKeyPressed="#txtQuantity_OnKeyPressed" onKeyReleased="#txtQuantity_OnKeyReleased" onKeyTyped="#txtQuantity_OnKeyTyped" prefHeight="31.0" prefWidth="79.0" promptText="Quantity">
+         <font>
+            <Font name="Roboto Condensed Regular" size="15.0" />
+         </font>
+      </TextField>
+      <Text fx:id="txtQuantityOnHand" fill="WHITE" layoutX="500.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="112.52636528015137">
+         <font>
+            <Font name="Roboto Condensed Regular" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtQuantityOnHand1" fill="WHITE" layoutX="514.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qty on hand" wrappingWidth="79.00000149011612">
+         <font>
+            <Font name="Roboto Condensed Regular" size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnAddItem" layoutX="622.0" layoutY="275.0" mnemonicParsing="false" onAction="#btnAddItem_OnAction" onKeyPressed="#btnAddItem_OnKeyPressed" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: #2D9069;" text="Add Item" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Text fx:id="txtTotalValue" fill="WHITE" layoutX="602.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00">
+         <font>
+            <Font name="Roboto Condensed Regular" size="17.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtNetValue" fill="WHITE" layoutX="599.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00">
+         <font>
+            <Font name="Roboto Condensed Regular" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtDiscount" layoutX="599.0" layoutY="519.0" onKeyPressed="#txtDiscount_onKeyPressed" onKeyTyped="#txtDiscount_onKeyTyped" prefHeight="31.0" prefWidth="117.0" promptText="Enter Discount %">
+         <font>
+            <Font name="Roboto Condensed Regular" size="15.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnPlaceOrder" layoutX="605.0" layoutY="585.0" mnemonicParsing="false" onAction="#btnPlaceOrder_OnAction" onKeyPressed="#btnPlaceOrder_OnKeyPressed" prefHeight="30.0" prefWidth="159.0" style="-fx-background-color: #2D9069;" text="Place Order" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Text fill="WHITE" layoutX="46.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID :">
+         <font>
+            <Font name="Roboto Condensed Regular" size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtOid" fill="WHITE" layoutX="134.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID">
+         <font>
+            <Font name="Roboto Condensed Regular" size="21.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnDiscount" layoutX="735.0" layoutY="520.0" mnemonicParsing="false" onAction="#btnDiscount_onAction" onKeyPressed="#btnDiscount_onKeyPressed" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #FC8B04;" text="Add" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="737.0" layoutY="275.0" mnemonicParsing="false" onAction="#btnDelete_OnAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: #D32A26;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

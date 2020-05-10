@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mainPane_OnMouseClicked" prefHeight="655.0" prefWidth="825.0" style="-fx-background-color: #1A2035;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.r4enterprises.system.controller.DashboardController">
+   <children>
+      <Text fill="#fdfdff" layoutX="33.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
+         <font>
+            <Font name="Roboto Condensed Regular" size="23.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="11.0" layoutY="124.0" prefHeight="271.0" prefWidth="244.0" style="-fx-background-radius: 6px; -fx-background-color: #202940;">
+         <children>
+            <LineChart fx:id="lineChartDailySale" layoutX="15.0" layoutY="-43.0" prefHeight="193.0" prefWidth="210.0" style="-fx-background-color: #2E9069;">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" fx:id="xSalesAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="ySalesAxis" forceZeroInRange="false" prefHeight="152.0" prefWidth="50.0" side="LEFT" tickLabelFill="WHITE" />
+              </yAxis>
+            </LineChart>
+            <Text fill="#698184" layoutX="74.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daily Sale Value">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#698184" layoutX="107.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="by today Sales">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtSaleDifference" layoutX="24.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font>
+            </Text>
+            <Separator layoutX="23.0" layoutY="210.0" opacity="0.15" prefWidth="200.0" />
+            <Text fill="#698184" layoutX="42.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Based on Last 5 days analytics">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="275.0" layoutY="124.0" prefHeight="271.0" prefWidth="244.0" style="-fx-background-radius: 6px; -fx-background-color: #202940;">
+         <children>
+            <LineChart fx:id="lineChartDailySaleCount" layoutX="15.0" layoutY="-43.0" prefHeight="193.0" prefWidth="210.0" style="-fx-background-color: #FC8E03;">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" fx:id="xItemSalesAxis1" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="yItemSalesAxis1" prefHeight="141.0" prefWidth="31.0" side="LEFT" tickLabelFill="WHITE" />
+               </yAxis>
+            </LineChart>
+            <Text fill="#698184" layoutX="76.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daily Sale Count">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#698184" layoutX="109.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="by today Order Count">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtItemCountDifference" fill="#698184" layoutX="24.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font>
+            </Text>
+            <Separator layoutX="23.0" layoutY="210.0" opacity="0.15" prefWidth="200.0" />
+            <Text fill="#698184" layoutX="42.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Based on Last 5 days analytics">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="540.0" layoutY="124.0" prefHeight="271.0" prefWidth="244.0" style="-fx-background-radius: 6px; -fx-background-color: #202940;">
+         <children>
+            <LineChart fx:id="lineChartReturnCount" layoutX="15.0" layoutY="-43.0" prefHeight="193.0" prefWidth="210.0" style="-fx-background-color: #D93834;">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" fx:id="xReturnsAxis" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="yRetunsAxis1" prefHeight="141.0" prefWidth="31.0" side="LEFT" tickLabelFill="WHITE" />
+               </yAxis>
+            </LineChart>
+            <Text fill="#698184" layoutX="71.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Return Count">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#698184" layoutX="12.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistical illustration for customer return">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font>
+            </Text>
+            <Separator layoutX="23.0" layoutY="210.0" opacity="0.15" prefWidth="200.0" />
+            <Text fill="#698184" layoutX="42.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Based on Last 5 days analytics">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="11.0" layoutY="469.0" prefHeight="92.0" prefWidth="179.0" style="-fx-background-color: #202940; -fx-background-radius: 6px;">
+         <children>
+            <AnchorPane layoutX="10.0" layoutY="-30.0" prefHeight="57.0" prefWidth="65.0" style="-fx-background-color: #FC8E03; -fx-background-radius: 6px;">
+               <children>
+                  <FontAwesomeIconView fill="#eeeeee" glyphName="CREDIT_CARD" layoutX="21.0" layoutY="36.0" size="25" />
+               </children></AnchorPane>
+            <Text fill="#698184" layoutX="112.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payments">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtPaymentValue" fill="#698184" layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00" textAlignment="RIGHT" wrappingWidth="161.75780776143074">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Separator layoutX="28.0" layoutY="535.0" opacity="0.15" prefHeight="3.0" prefWidth="152.0" />
+      <Text fill="#698184" layoutX="57.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="As at last 24 hours">
+         <font>
+            <Font name="Roboto Condensed Regular" size="12.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="205.0" layoutY="469.0" prefHeight="92.0" prefWidth="179.0" style="-fx-background-color: #202940; -fx-background-radius: 6px;">
+         <children>
+            <AnchorPane layoutX="10.0" layoutY="-30.0" prefHeight="57.0" prefWidth="65.0" style="-fx-background-color: #49A356; -fx-background-radius: 6px;">
+               <children>
+                  <FontAwesomeIconView fill="#eeeeee" glyphName="DOLLAR" layoutX="21.0" layoutY="36.0" size="25" />
+               </children>
+            </AnchorPane>
+            <Text fill="#698184" layoutX="120.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtRevenueValue" fill="#698184" layoutX="39.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00" textAlignment="RIGHT" wrappingWidth="137.75780776143074">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text fill="#698184" layoutX="254.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="As at last 24 hours">
+         <font>
+            <Font name="Roboto Condensed Regular" size="12.0" />
+         </font>
+      </Text>
+      <Separator layoutX="218.0" layoutY="535.0" opacity="0.15" prefHeight="3.0" prefWidth="152.0" />
+      <AnchorPane layoutX="398.0" layoutY="469.0" prefHeight="92.0" prefWidth="179.0" style="-fx-background-color: #202940; -fx-background-radius: 6px;">
+         <children>
+            <AnchorPane layoutX="10.0" layoutY="-30.0" prefHeight="57.0" prefWidth="65.0" style="-fx-background-color: D93834; -fx-background-radius: 6px;">
+               <children>
+                  <FontAwesomeIconView fill="#eeeeee" glyphName="USER_PLUS" layoutX="21.0" layoutY="36.0" size="25" />
+               </children>
+            </AnchorPane>
+            <Text fill="#698184" layoutX="100.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Payable">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtTotalPayableValue" fill="#698184" layoutX="31.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00" textAlignment="RIGHT" wrappingWidth="152.00000256299973">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text fill="#698184" layoutX="452.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Throught the business">
+         <font>
+            <Font name="Roboto Condensed Regular" size="12.0" />
+         </font>
+      </Text>
+      <Separator layoutX="416.0" layoutY="536.0" opacity="0.15" prefHeight="3.0" prefWidth="152.0" />
+      <AnchorPane layoutX="603.0" layoutY="469.0" prefHeight="92.0" prefWidth="179.0" style="-fx-background-color: #202940; -fx-background-radius: 6px;">
+         <children>
+            <AnchorPane layoutX="10.0" layoutY="-30.0" prefHeight="57.0" prefWidth="65.0" style="-fx-background-color: #1BACBE; -fx-background-radius: 6px;">
+               <children>
+                  <FontAwesomeIconView fill="#eeeeee" glyphName="USERS" layoutX="21.0" layoutY="36.0" size="25" />
+               </children>
+            </AnchorPane>
+            <Text fill="#698184" layoutX="88.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Receivable">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtTotalReceivable" fill="#698184" layoutX="37.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00" textAlignment="RIGHT" wrappingWidth="152.00000256299973">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text fill="#698184" layoutX="662.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Throught the business">
+         <font>
+            <Font name="Roboto Condensed Regular" size="12.0" />
+         </font>
+      </Text>
+      <Separator layoutX="626.0" layoutY="538.0" opacity="0.15" prefHeight="3.0" prefWidth="152.0" />
+   </children>
+</AnchorPane>

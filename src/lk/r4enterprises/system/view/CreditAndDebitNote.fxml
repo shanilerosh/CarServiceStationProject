@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mainPane_OnMouseClicked" prefHeight="656.0" prefWidth="832.0" style="-fx-background-color: #1A2035;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.r4enterprises.system.controller.CreditAndDebitNoteController">
+   <children>
+      <Text fill="WHITE" layoutX="30.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Note :">
+         <font>
+            <Font name="Roboto Condensed Regular" size="23.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="30.0" layoutY="89.0" prefHeight="152.0" prefWidth="691.0" style="-fx-background-radius: 6px; -fx-background-color: #202940;">
+         <children>
+            <AnchorPane layoutX="14.0" layoutY="-32.0" prefHeight="59.0" prefWidth="662.0" style="-fx-background-color: #8E3A9F; -fx-background-radius: 6px;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Note" AnchorPane.topAnchor="-3.0">
+                     <font>
+                        <Font name="Roboto Condensed Regular" size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Customer Detail">
+                     <font>
+                        <Font name="Roboto Condensed Regular" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <TextField fx:id="txtCustomerName" layoutX="14.0" layoutY="56.0" onKeyPressed="#txtCustomerName_onKeyPressed" onKeyTyped="#txtCustomerName_onKeyTyped" prefHeight="25.0" prefWidth="310.0" promptText="Customer Name">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font></TextField>
+            <TextField fx:id="txtCustomerAmount" layoutX="346.0" layoutY="56.0" onKeyPressed="#txtAmount_onKeyPressed" onKeyTyped="#txtAmount_onKeyTyped" prefHeight="31.0" prefWidth="310.0" promptText="Amount">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtCustomerNarration" layoutX="11.0" layoutY="97.0" onKeyPressed="#txtNarration_onKeyPressed" prefHeight="31.0" prefWidth="642.0" promptText="Narration (OrderID/Additional Comments)">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnAddCreditNote" layoutX="42.0" layoutY="248.0" mnemonicParsing="false" onAction="#btnAddCreditNote_OnAction" onKeyPressed="#btnAddCreditNote_onKeyPressed" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #2D9069;" text="Add Credit Note" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Text fx:id="txtCreditNote" fill="WHITE" layoutX="151.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="227.28271484375">
+         <font>
+            <Font name="Roboto Condensed Regular" size="23.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnResetCreditNote" layoutX="582.0" layoutY="251.0" mnemonicParsing="false" onAction="#btnResetCreditNote_onAction" prefHeight="24.0" prefWidth="117.0" style="-fx-background-color: #FC8B04;" text="Reset" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutX="34.0" layoutY="390.0" prefHeight="134.0" prefWidth="691.0" style="-fx-background-radius: 6px; -fx-background-color: #202940;">
+         <children>
+            <AnchorPane layoutX="7.0" layoutY="-47.0" prefHeight="59.0" prefWidth="662.0" style="-fx-background-color: #8E3A9F; -fx-background-radius: 6px;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Debit Note" AnchorPane.topAnchor="-3.0">
+                     <font>
+                        <Font name="Roboto Condensed Regular" size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Suppler Detail">
+                     <font>
+                        <Font name="Roboto Condensed Regular" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <TextField fx:id="txtSuplierName" layoutX="14.0" layoutY="36.0" onKeyPressed="#txtSuplierName_onKeyPressed" onKeyTyped="#txtSuplierName_onKeyTyped" prefHeight="25.0" prefWidth="310.0" promptText="Supplier Name">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtSupplierAmount" layoutX="346.0" layoutY="36.0" onKeyPressed="#txtSupplierAmount_onKeyPressed" onKeyTyped="#txtSupplierAmount_onKeyTyped" prefHeight="31.0" prefWidth="310.0" promptText="Amount">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtSupplierNarration" layoutX="11.0" layoutY="77.0" onKeyPressed="#txtSupplierNarration_onKeyPressed" prefHeight="31.0" prefWidth="642.0" promptText="Narration (OrderID/Additional Comments)">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="15.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnAddDebitNote" layoutX="48.0" layoutY="532.0" mnemonicParsing="false" onAction="#btnAddDebitNote_OnAction" onKeyPressed="#btnAddDebitNote_onKeyPressed" prefHeight="9.0" prefWidth="117.0" style="-fx-background-color: #2D9069;" text="Add Debit Note" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnResetDebitNote" layoutX="591.0" layoutY="533.0" mnemonicParsing="false" onAction="#btnResetDebitNote_onAction" prefHeight="24.0" prefWidth="117.0" style="-fx-background-color: #FC8B04;" text="Reset" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Text fill="WHITE" layoutX="42.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Debit Note :">
+         <font>
+            <Font name="Roboto Condensed Regular" size="23.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtDebitNote" fill="WHITE" layoutX="154.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="227.28271484375">
+         <font>
+            <Font name="Roboto Condensed Regular" size="23.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

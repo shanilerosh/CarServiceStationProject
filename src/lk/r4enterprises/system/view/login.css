@@ -1,0 +1,42 @@
+#btnLogin{
+    -fx-background-color:  #8E3A9F;
+    -fx-text-fill: #FFF;
+}
+
+#btnLogin:hover{
+    -fx-text-fill: #8E3A9F;
+    -fx-background-color: transparent;
+    -fx-border-color: #8E3A9F;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+
+}
+
+#btnLogin:focused{
+    -fx-text-fill: #8E3A9F;
+    -fx-background-color: transparent;
+    -fx-border-color: #8E3A9F;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+
+}
+
+#txtUserName,#txtPassword {
+  -fx-border-color: grey;
+  -fx-border-width: 0 0 1 0;
+  -fx-background-color: transparent;
+}
+
+#txtUserName,#txtPassword:focused {
+  -fx-border-color: #8E3A9F;
+  -fx-border-width: 0 0 2 0;
+  -fx-background-color: transparent;
+}
+
+#iconMinimize:hover{
+    -fx-cursor: hand;
+}
+
+#iconClose:hover{
+    -fx-cursor: hand;
+}
