@@ -10,6 +10,7 @@ import animatefx.animation.FadeIn;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -125,10 +126,9 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadDate();
-        
-        
-
     }
+
+    
 
     @FXML
     private void btnOrder_OnAction(ActionEvent event) throws IOException {
@@ -235,7 +235,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void loadDashboard(){
+    public void loadDashboard(){
         Parent root;
         try {
             root = FXMLLoader.load(getClass().getResource("/lk/r4enterprises/system/view/Dashboard.fxml"));
@@ -254,10 +254,10 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void iconSetting_onMouseClicked(MouseEvent event) throws IOException {
-        FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/UserProfile.fxml"));
+    private void iconSetting_onMouseClicked(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
+        FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/User.fxml"));
         Parent root=fXMLLoader.load();
-        UserProfileController controller = fXMLLoader.<UserProfileController>getController();
+        UserController controller = fXMLLoader.<UserController>getController();
         controller.setUser(user);
         root.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/general.css").toExternalForm());
         borderPane.setCenter(root);

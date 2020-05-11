@@ -98,6 +98,7 @@ public class LoginController implements Initializable {
                         scene.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/mainmenue.css").toExternalForm());
                         stage.setScene(scene);
                         stage.show();
+                        controller.loadDashboard();
                         AlertBox.showDisplayMessage("Success", txtUserName.getText()
                                 + " welcome back");
                     } catch (IOException ex) {
