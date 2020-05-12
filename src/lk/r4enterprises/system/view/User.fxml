@@ -69,20 +69,30 @@
             <Blend />
          </effect>
       </TableView>
-      <Text fx:id="txtUid" fill="WHITE" layoutX="120.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="txtUid" fill="WHITE" layoutX="120.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Roboto Condensed Regular" size="23.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="253.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User ID for New User :">
+      <Text fx:id="txtNewUserLabel" fill="WHITE" layoutX="253.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User ID for New User :">
          <font>
             <Font name="Roboto Condensed Regular" size="23.0" />
          </font>
       </Text>
-      <Text fx:id="txtNewUID" fill="WHITE" layoutX="471.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="txtNewUID" fill="WHITE" layoutX="471.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Roboto Condensed Regular" size="23.0" />
          </font>
       </Text>
+      <Button fx:id="btnResetPwd" layoutX="264.0" layoutY="508.0" mnemonicParsing="false" onAction="#btnResetPwd_onAction" prefHeight="30.0" prefWidth="139.0" style="-fx-background-color: #D32A26;" text="Reset Password" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnMakeActive" layoutX="38.0" layoutY="509.0" mnemonicParsing="false" onAction="#btnMakeActive_onAction" prefHeight="30.0" prefWidth="212.0" style="-fx-background-color: #FC8B04;" text="Make user Active/Deactive" textFill="WHITE">
+         <font>
+            <Font name="Roboto Condensed Regular" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
