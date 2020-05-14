@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -183,16 +184,16 @@ public class OrderController implements Initializable {
     private void txtQuantity_OnKeyReleased(KeyEvent event) throws ClassNotFoundException, SQLException {
         if (!txtItemModel.getText().isEmpty() && new ItemController().checkItemExist(txtItemModel.getText())) {
             Item item = new ItemController().getItemFromModel(txtItemModel.getText());
-            
-            if(item.getCategory().equals("Service")){
+
+            if (item.getCategory().equals("Service")) {
                 txtQuantityOnHand.setText("Service");
                 btnAddItem.setDisable(false);
-            }else{
-                int qtyOnHand=item.getQuantityOnHand();
+            } else {
+                int qtyOnHand = item.getQuantityOnHand();
                 txtQuantityOnHand.setText(Integer.toString(qtyOnHand));
                 btnAddItem.setDisable(false);
             }
-            
+
         } else {
             AlertBox.showErrorMessage("Error", "Item Model is wrong");
             txtQuantity.clear();
@@ -216,8 +217,10 @@ public class OrderController implements Initializable {
             } else {
                 int quantityOnHand = item.getQuantityOnHand();
                 int requested = Integer.parseInt(txtQuantity.getText());
-
-                if (quantityOnHand < requested) {
+                if(!item.getContinuity().equals("Con")){
+                     AlertBox.showErrorMessage("Error", "This Item is Discontinued.Please request the admin to make it Continue to proceed the order");
+                }
+                else if (quantityOnHand < requested) {
                     AlertBox.showErrorMessage("Error", "Requested stock is out of "
                             + "quantity.Please check the existing balance and place the order");
                     txtQuantity.clear();
@@ -277,10 +280,10 @@ public class OrderController implements Initializable {
         }
     }
 
-    private double getTotal(){
+    private double getTotal() {
         return Double.parseDouble(txtTotalValue.getText());
     }
-    
+
     private void btnDiscount_OnAction(ActionEvent event) {
         if (!txtDiscount.getText().isEmpty()) {
             double rate = 100 - Double.parseDouble(txtDiscount.getText());
@@ -293,7 +296,7 @@ public class OrderController implements Initializable {
 
     @FXML
     private void btnPlaceOrder_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException, JRException, FileNotFoundException {
-        boolean printCheck=true;
+        boolean printCheck = true;
         String orderId = txtOid.getText();
         String orderDate = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
         Car car = null;
@@ -314,8 +317,7 @@ public class OrderController implements Initializable {
             AnimateComponent.animateEmptyField(txtModel);
         } else if (tblOrder.getItems().isEmpty()) {
             AnimateComponent.animateEmptyField(tblOrder);
-        }
-        else {
+        } else {
             customer = new CustomerController().getCustomerFromName(txtName.getText());
             if (customer == null) {
                 customer = new Customer(new CustomerController().getLatestCid(), txtAddress.getText(), txtName.getText(), txtMobile.getText());
@@ -347,11 +349,11 @@ public class OrderController implements Initializable {
                             tblOrder.getItems().get(i).getItemModel()).getIid();
                     double qty = tblOrder.getItems().get(i).getQuantity();
                     double price = tblOrder.getItems().get(i).getUnitPrice();
-                    
+
                     Item item = new ItemController().getItemFromIid(itemCode);
 
-                    if(!item.getCategory().equals("Service")){
-                    list.add(new OrderDetail(itemCode, orderId, qty, price));
+                    if (!item.getCategory().equals("Service")) {
+                        list.add(new OrderDetail(itemCode, orderId, qty, price));
                     }
                 }
 
@@ -369,7 +371,7 @@ public class OrderController implements Initializable {
                 isSave = placeOrder(order);
 
                 if (isSave) {
-                    printCheck=AlertBox.showConfMessage(order.getOid()+" has been created successfully.Do you want to print the Order?", "Sucess,Proceed to print?");
+                    printCheck = AlertBox.showConfMessage(order.getOid() + " has been created successfully.Do you want to print the Order?", "Sucess,Proceed to print?");
                     con.commit();
                     clearAllFields();
                     //setOrderId();
@@ -379,10 +381,10 @@ public class OrderController implements Initializable {
                 }
 
                 con.setAutoCommit(true);
-                if(printCheck){
-                    printOrder(order.getOid()); 
+                if (printCheck) {
+                    printOrder(order.getOid());
                 }
-                
+
                 setOrderId();
             }
         }
@@ -460,7 +462,6 @@ public class OrderController implements Initializable {
         btnDelete.setDisable(true);
     }
 
-    
     @FXML
     private void txtName_OnKeyTyped(KeyEvent event) {
         TextFieldEventsHandling.allowOnlyLettersAndCharacters(event);
@@ -528,9 +529,9 @@ public class OrderController implements Initializable {
     @FXML
     private void txtDiscount_onKeyTyped(KeyEvent event) {
         TextFieldEventsHandling.allowOnlyNumbers(event);
-        if(txtDiscount.getText().length()>1){
+        if (txtDiscount.getText().length() > 1) {
             event.consume();
-        }   
+        }
 
     }
 
@@ -566,7 +567,7 @@ public class OrderController implements Initializable {
         }
         return list;
     }
-    
+
     ObservableList<ReportTableModel> getOrdersCountByDates(String datePickerFrom, String datePickerTo) throws ClassNotFoundException, SQLException {
         ObservableList<ReportTableModel> list = FXCollections.observableArrayList();
         PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT Order_.dateOfOrder,SUM(OrderDetail.quantity) FROM Order_ INNER JOIN OrderDetail ON OrderDetail.oid=Order_.oid WHERE Order_.dateOfOrder BETWEEN ? AND ? GROUP BY Order_.dateOfOrder");
@@ -582,8 +583,7 @@ public class OrderController implements Initializable {
         return list;
     }
 
-    
-        ObservableList<ReportTableModel> getOrdersSumByDates(String datePickerFrom, String datePickerTo) throws ClassNotFoundException, SQLException {
+    ObservableList<ReportTableModel> getOrdersSumByDates(String datePickerFrom, String datePickerTo) throws ClassNotFoundException, SQLException {
         ObservableList<ReportTableModel> list = FXCollections.observableArrayList();
         PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT dateOfOrder,SUM(amount) FROM Order_ WHERE dateOfOrder BETWEEN ? and ? GROUP BY dateOfOrder");
         ps.setString(1, datePickerFrom);
@@ -597,7 +597,7 @@ public class OrderController implements Initializable {
         }
         return list;
     }
-    
+
     ObservableList<ReportTableModel> getCustomerWiseSale(String dateFrom, String dateTo) throws ClassNotFoundException, SQLException {
         ObservableList<ReportTableModel> list = FXCollections.observableArrayList();
         PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT cid,SUM(amount) FROM Order_ WHERE dateOfOrder BETWEEN ? AND ? GROUP BY cid");
@@ -645,43 +645,43 @@ public class OrderController implements Initializable {
 
     @FXML
     private void btnDiscount_onAction(ActionEvent event) {
-        if(!txtDiscount.getText().isEmpty()){
-                double rate=100-Double.parseDouble(txtDiscount.getText());
-                double netTotal=(rate*Double.parseDouble(txtTotalValue.getText()))/100;
-                txtNetValue.setText(Double.toString(netTotal));
-        }else{
+        if (!txtDiscount.getText().isEmpty()) {
+            double rate = 100 - Double.parseDouble(txtDiscount.getText());
+            double netTotal = (rate * Double.parseDouble(txtTotalValue.getText())) / 100;
+            txtNetValue.setText(Double.toString(netTotal));
+        } else {
             AlertBox.showErrorMessage("Error", "Enter a discount and try ");
         }
     }
 
     @FXML
     private void btnDiscount_onKeyPressed(KeyEvent event) {
-        if(TextFieldEventsHandling.isEnterPressed(event)){
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
             btnDiscount.fire();
         }
-        
+
         btnPlaceOrder.requestFocus();
     }
 
     public String getRevenueForLastDay(String datePickerFrom, String datePickerTo) throws ClassNotFoundException, SQLException {
         PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT SUM(amount) FROM Order_ WHERE dateOfOrder BETWEEN ? and ?");
-        double value=0;
+        double value = 0;
         ps.setString(1, datePickerFrom);
         ps.setString(2, datePickerTo);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-                value=rs.getDouble(1);
+            value = rs.getDouble(1);
         }
         String format = String.format("%,.2f", value);
         return format;
     }
-    
+
     public String loadTotalReceivale() throws ClassNotFoundException, SQLException {
         PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT SUM(amount)-(SELECT SUM(amount) FROM Receipt)-(SELECT SUM(pricePerReturn*returnQty) FROM ReturnInward)+(SELECT SUM(Amount) FROM CreditNote) FROM Order_;");
-        double value=0;
+        double value = 0;
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-                value=rs.getDouble(1);
+            value = rs.getDouble(1);
         }
         String format = String.format("%,.2f", value);
         return format;
@@ -689,12 +689,12 @@ public class OrderController implements Initializable {
 
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
-        if(!tblOrder.getSelectionModel().isEmpty()){
-        int selectedIndex = tblOrder.getSelectionModel().getSelectedIndex();
-        tblOrder.getItems().remove(selectedIndex);
-        loadTable();
-        btnDelete.setDisable(true);
-        txtItemModel.requestFocus();
+        if (!tblOrder.getSelectionModel().isEmpty()) {
+            int selectedIndex = tblOrder.getSelectionModel().getSelectedIndex();
+            tblOrder.getItems().remove(selectedIndex);
+            loadTable();
+            btnDelete.setDisable(true);
+            txtItemModel.requestFocus();
         }
     }
 
@@ -709,15 +709,44 @@ public class OrderController implements Initializable {
         btnDelete.setDisable(true);
     }
 
-    private void printOrder(String oid) throws JRException, ClassNotFoundException, SQLException, FileNotFoundException{
-            InputStream in=new FileInputStream("/home/shanil/NetBeansProjects/CarServiceStationProject/src/lk/r4enterprises/system/view/Reports/Bill.jrxml");
-            JasperReport ja=JasperCompileManager.compileReport(in);
-            Map<String,Object> para=new HashMap<>();
-            para.put("OrderID", oid);
-            para.put("oidValueForTable", oid);
-            JasperPrint jp=JasperFillManager.fillReport(ja,para,DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(jp,false);
-    } 
+    private void printOrder(String oid) throws JRException, ClassNotFoundException, SQLException, FileNotFoundException {
+        InputStream in = new FileInputStream("/home/shanil/NetBeansProjects/CarServiceStationProject/src/lk/r4enterprises/system/view/Reports/Bill.jrxml");
+        JasperReport ja = JasperCompileManager.compileReport(in);
+        Map<String, Object> para = new HashMap<>();
+        para.put("OrderID", oid);
+        para.put("oidValueForTable", oid);
+        JasperPrint jp = JasperFillManager.fillReport(ja, para, DBConnection.getInstance().getConnection());
+        JasperViewer.viewReport(jp, false);
+    }
 
-    
+    ObservableList<ReportTableModel> getProfitPerOrder(String dateFrom, String dateTo) throws ClassNotFoundException, SQLException {
+        ObservableList<ReportTableModel> list = FXCollections.observableArrayList();
+        PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT OrderDetail.oid,Order_.amount,Order_.dateOfOrder,Order_.cid,OrderDetail.iid,OrderDetail.quantity,OrderDetail.itemPrice,(AVG(SupplierDetail.amount)*OrderDetail.quantity) AS expenses,Order_.amount-(OrderDetail.quantity*AVG(SupplierDetail.amount)) AS Profit FROM Item INNER JOIN SupplierDetail ON SupplierDetail.iid=Item.iid INNER JOIN OrderDetail ON OrderDetail.iid=Item.iid INNER JOIN Order_ ON OrderDetail.oid=Order_.oid WHERE Order_.dateOfOrder BETWEEN ? AND ? GROUP BY OrderDetail.oid, OrderDetail.iid;");
+        ps.setString(1, dateFrom);
+        ps.setString(2, dateTo);
+        ResultSet rs = ps.executeQuery();
+
+        
+        ListIterator<ReportTableModel> iterator = list.listIterator();
+        while (rs.next()) {
+            ReportTableModel model = new ReportTableModel(rs.getString(1),
+                    new CustomerController().getCustomerNameFromId(
+                            rs.getString(4)),
+                    rs.getString(3),
+                    rs.getString(9),
+                    String.format("%,.2f", rs.getDouble(2)),
+                    rs.getString(8)
+            );
+            iterator.add(model);
+            if(iterator.previous().getOid().equals(model.getOid())){
+                model.setAmount("123");
+                iterator.remove();
+            }
+            iterator.next();
+        }
+
+        return list;
+
+    }
+
 }

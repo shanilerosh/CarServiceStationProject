@@ -120,6 +120,9 @@ public class ReportController implements Initializable {
                 case "Debit Note":
                     DebitNoteTable();
                     break;
+                case "Sales Profit":
+                    SalesProfitTable();
+                    break;
 
             }
 
@@ -490,6 +493,31 @@ public class ReportController implements Initializable {
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colDnid, colDateOfTransaction, colSupplierName, colAmount);
         tblReportData.setItems(new CreditAndDebitNoteController().getAllDebitNotes(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        setTotalValueAndCount();
+    }
+
+    private void SalesProfitTable() throws ParseException, ClassNotFoundException, SQLException {
+        TableColumn<ReportTableModel, String> colOrderId = new TableColumn<>("Order Id");
+        colOrderId.setCellValueFactory(new PropertyValueFactory<>("oid"));
+        colOrderId.setMinWidth(70);
+        TableColumn<ReportTableModel, String> colOrderAmount = new TableColumn<>("Order Amount");
+        colOrderAmount.setCellValueFactory(new PropertyValueFactory<>("totalOrder"));
+        colOrderAmount.setMinWidth(250);
+        TableColumn<ReportTableModel, String> colCustomerName = new TableColumn<>("Customer Name");
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        colCustomerName.setMinWidth(250);
+        TableColumn<ReportTableModel, String> colDate = new TableColumn<>("Date of Trans");
+        colDate.setCellValueFactory(new PropertyValueFactory<>("dateOfTransaction"));
+        colDate.setMinWidth(250);
+        TableColumn<ReportTableModel, String> colExpenses = new TableColumn<>("Cost per order");
+        colExpenses.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        colExpenses.setMinWidth(250);
+        TableColumn<ReportTableModel, Integer> colNetProfit = new TableColumn<>("Net Profit");
+        colNetProfit.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colNetProfit.setMinWidth(250);
+        tblReportData.getColumns().clear();
+        tblReportData.getColumns().addAll(colOrderId,colDate,colCustomerName,colOrderAmount,colExpenses,colNetProfit);
+        tblReportData.setItems(new OrderController().getProfitPerOrder(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
         setTotalValueAndCount();
     }
 

@@ -40,6 +40,7 @@ public class ReportTableModel {
     private String iid;
     private String itemCategory;
     private String customerMobile;
+    private String cost;
 
     public ReportTableModel(String dateOfTransaction, int quantity) {
         this.dateOfTransaction = dateOfTransaction;
@@ -102,19 +103,23 @@ public class ReportTableModel {
         this.sid = sid;
         this.supplierName = supplierName;
     }
-    
-    
-    
-    
-    
-    
 
-    
+        public ReportTableModel(String oid, String customerName, String dateOfTransaction, String amount, String totalOrder, String cost) {
+        this.oid = oid;
+        this.customerName = customerName;
+        this.dateOfTransaction = dateOfTransaction;
+        this.amount = amount;
+        this.totalOrder = totalOrder;
+        this.cost = cost;
+    }
 
-    
-    
-    
-    
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
     
     
 

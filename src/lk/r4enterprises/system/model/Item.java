@@ -16,15 +16,20 @@ public class Item {
     private double unitPrice;
     private String model;
     private int quantityOnHand;
+    private String continuity;
 
-    public Item(String iid, String name, String category, double unitPrice, String model, int quantityOnHand) {
+    public Item(String iid, String name, String category, double unitPrice, String model, int quantityOnHand, String continuity) {
         this.iid = iid;
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
         this.model = model;
         this.quantityOnHand = quantityOnHand;
+        this.continuity = continuity;
     }
+
+    
+
 
     public Item() {
     }
@@ -40,6 +45,16 @@ public class Item {
     public String getIid() {
         return iid;
     }
+
+    public String getContinuity() {
+        return continuity;
+    }
+
+    public void setContinuity(String continuity) {
+        this.continuity = continuity;
+    }
+
+
 
     /**
      * @param iid the iid to set
