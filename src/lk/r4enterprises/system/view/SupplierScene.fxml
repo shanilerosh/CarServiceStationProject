@@ -54,12 +54,12 @@
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="462.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnUpdate_OnAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #FC8B04;" text="Update" textFill="WHITE">
+      <Button fx:id="btnUpdate" layoutX="431.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnUpdate_OnAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #FC8B04;" text="Update" textFill="WHITE">
          <font>
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="597.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnDelete_OnAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #D32A26;" text="Delete" textFill="WHITE">
+      <Button fx:id="btnActiveInactive" layoutX="564.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnActiveInactive_OnAction" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #D32A26;" text="Active / Inactive" textFill="WHITE">
          <font>
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
@@ -68,9 +68,10 @@
         <columns>
           <TableColumn fx:id="colSid" prefWidth="75.0" text="SID" />
           <TableColumn fx:id="colName" prefWidth="104.0" text="Name" />
-            <TableColumn fx:id="colEmail" prefWidth="151.0" resizable="false" text="Email" />
-            <TableColumn fx:id="colAddress" prefWidth="199.0" resizable="false" text="Address" />
-            <TableColumn fx:id="colMobileNumber" prefWidth="161.0" text="Mobile Number" />
+            <TableColumn fx:id="colEmail" prefWidth="140.0" resizable="false" text="Email" />
+            <TableColumn fx:id="colAddress" prefWidth="150.0" resizable="false" text="Address" />
+            <TableColumn fx:id="colMobileNumber" prefWidth="150.0" text="Mobile Number" />
+            <TableColumn fx:id="colStatus" prefWidth="70.0" text="Status" />
         </columns>
       </TableView>
       <TextField fx:id="txtsearchSupplier" layoutX="38.0" layoutY="321.0" onKeyReleased="#searchSupplier" prefHeight="25.0" prefWidth="323.0" promptText="Search Supliers">

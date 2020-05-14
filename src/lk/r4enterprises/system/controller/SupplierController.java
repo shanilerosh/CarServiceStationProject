@@ -30,7 +30,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.r4enterprises.system.db.DBConnection;
-import lk.r4enterprises.system.model.Customer;
 import lk.r4enterprises.system.model.ReportTableModel;
 import lk.r4enterprises.system.model.Supplier;
 import lk.r4enterprises.system.model.User;
@@ -73,24 +72,26 @@ public class SupplierController implements Initializable {
     private Button btnCreate;
     @FXML
     private Button btnUpdate;
-    @FXML
-    private Button btnDelete;
+    
     @FXML
     private TextField txtName;
     @FXML
     private TextField txtsearchSupplier;
     
     private User user;
+    @FXML
+    private Button btnActiveInactive;
+    @FXML
+    private TableColumn<Supplier, String> colStatus;
 
     @FXML
-    private void btnCreate_OnAction(ActionEvent event) {
+    private void btnCreate_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
         if(txtName.getText().isEmpty()){
             AnimateComponent.animateEmptyField(txtName);
         }else if(txtMobileNumber.getText().isEmpty()){
             AnimateComponent.animateEmptyField(txtMobileNumber);
         }
         else{
-        try {
             if(addSupplier()){
                 tblSupplierData.getItems().add(
                 new Supplier(
@@ -98,26 +99,25 @@ public class SupplierController implements Initializable {
                     txtName.getText(),
                     txtEmail.getText(),
                     txtAddress.getText(),
-                    txtMobileNumber.getText()
+                    txtMobileNumber.getText(),
+                    "Active"
                ));
                 AlertBox.showDisplayMessage("Successful", txtName.getText()
                         +"added Succesfully");
                 loadSuppliers();
+
             }else{
                 AlertBox.showErrorMessage("Error", "Try again");
                 loadSuppliers();
             }
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-                AlertBox.showErrorMessage("Error", ex.toString());
         }
-        }
+       clearFielsAndLoadAgain();
     }
 
     public void setUser(User user) {
         this.user = user;
         if(!user.getRole().equals("Admin")){
-            btnDelete.setVisible(false);
+            btnActiveInactive.setVisible(false);
             btnUpdate.setVisible(false);
         }
         
@@ -157,24 +157,14 @@ public class SupplierController implements Initializable {
         return ps.executeUpdate()>0;
     }
 
-    @FXML
-    private void btnDelete_OnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-            if(deleteSupplier()){
-                AlertBox.showDisplayMessage("Sucessful", txtSid.getText()+
-                        " succesfully deleted.");
-                loadSuppliers();
-            }else{
-                 AlertBox.showErrorMessage("Error", "Try again with correct"
-                        + " Selection");
-            }
-    }
     
-    private boolean deleteSupplier() throws SQLException, 
+    private boolean makeActiveInactive(String status) throws SQLException, 
             ClassNotFoundException {
         Connection con=DBConnection.getInstance().getConnection();
-        String sql="DELETE FROM Supplier WHERE sid=?";
+        String sql="UPDATE Supplier set status=? WHERE sid=?";
         PreparedStatement ps=con.prepareStatement(sql);
-        ps.setString(1, txtSid.getText());
+        ps.setInt(1, status.equals("Active") ? 0 : 1);
+        ps.setString(2, txtSid.getText());
         return ps.executeUpdate()>0;
     }
 
@@ -190,12 +180,13 @@ public class SupplierController implements Initializable {
                 observableArrayList();
         Connection con=DBConnection.getInstance().getConnection();
         String sql="SELECT * FROM Supplier WHERE name LIKE ? || email"
-                + " LIKE ? || adress LIKE ? || mobile LIKE ?";
+                + " LIKE ? || adress LIKE ? || mobile LIKE ? || status LIKE ?";
         PreparedStatement ps=con.prepareStatement(sql);
         ps.setString(1, "%"+value+"%");
         ps.setString(2, "%"+value+"%");
         ps.setString(3, "%"+value+"%");
         ps.setString(4, "%"+value+"%");
+        ps.setString(5, "%"+value+"%");
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
             suplierList.add(new Supplier(
@@ -203,7 +194,8 @@ public class SupplierController implements Initializable {
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5)
+                    rs.getString(5),
+                    rs.getInt(6)==1?"Active" : "Inactive"
             ));
         }
     return suplierList;
@@ -213,7 +205,7 @@ public class SupplierController implements Initializable {
     private void mainPane_OnMouseClicked(MouseEvent event) throws ClassNotFoundException, SQLException {
         tblSupplierData.getSelectionModel().clearSelection();
         loadSuppliers();
-        btnDelete.setDisable(true);
+        btnActiveInactive.setDisable(true);
         btnUpdate.setDisable(true);
         
     }
@@ -227,7 +219,7 @@ public class SupplierController implements Initializable {
         txtMobileNumber.clear();
         txtMobileNumber.clear();
         loadSuppliers();
-        btnDelete.setDisable(true);
+        btnActiveInactive.setDisable(true);
         btnUpdate.setDisable(true);
     }
 
@@ -238,7 +230,7 @@ public class SupplierController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("mobile"));
-        
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         try {
             loadSuppliers();
             clearFielsAndLoadAgain();
@@ -251,7 +243,7 @@ public class SupplierController implements Initializable {
         tblSupplierData.setItems(getAllSuppliers());
         tblSupplierData.getColumns().clear();
         tblSupplierData.getColumns().addAll(colSid,colName,colEmail,colAddress,
-                colMobileNumber);
+                colMobileNumber,colStatus);
         setSupplierId();
     }
     
@@ -268,7 +260,8 @@ public class SupplierController implements Initializable {
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5)
+                    rs.getString(5),
+                   rs.getInt(6)==1?"Active" : "Inactive" 
             ));
             System.out.println(rs.getString(5));
         }
@@ -300,7 +293,9 @@ public class SupplierController implements Initializable {
                        rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5)
+                        rs.getString(5),
+                        rs.getInt(6)==1?"Active" : "Inactive"
+                        
                 );
         }
     return sup;
@@ -319,7 +314,8 @@ public class SupplierController implements Initializable {
                        rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5)
+                        rs.getString(5),
+                        rs.getInt(6)==1?"Active" : "Inactive"
                 );
         }
     return sup;
@@ -340,13 +336,14 @@ public class SupplierController implements Initializable {
     public boolean addSupplier() throws ClassNotFoundException,
          SQLException{
         Connection con=DBConnection.getInstance().getConnection();
-        String sql="INSERT INTO Supplier values(?,?,?,?,?)";
+        String sql="INSERT INTO Supplier values(?,?,?,?,?,?)";
         PreparedStatement ps=con.prepareStatement(sql);
         ps.setString(1, txtSid.getText());
         ps.setString(2, txtName.getText());
         ps.setString(3, txtEmail.getText());
         ps.setString(4, txtAddress.getText());
         ps.setString(5, txtMobileNumber.getText());
+        ps.setString(6, "1");
         return ps.executeUpdate()>0;
     }
     
@@ -386,7 +383,7 @@ public class SupplierController implements Initializable {
     @FXML
     private void tblSupplierData_OnMouseClicked(MouseEvent event) {
         if(tblSupplierData.getSelectionModel().getSelectedIndex()>=0){
-            btnDelete.setDisable(false);
+            btnActiveInactive.setDisable(false);
         btnUpdate.setDisable(false);
         Supplier selected=tblSupplierData.getSelectionModel().getSelectedItem();
         txtSid.setText(selected.getSid());
@@ -499,6 +496,27 @@ public class SupplierController implements Initializable {
         }
         
         return list;
+    }
+
+    @FXML
+    private void btnActiveInactive_OnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String status = tblSupplierData.getSelectionModel().getSelectedItem().getStatus();
+        
+        if(makeActiveInactive(status)){
+                if (status.equals("Active")) {
+                AlertBox.showDisplayMessage("Sucessful", txtName.getText()
+                        + " is now on Inactive Mode.No GRNs can be raised from this customer now Onwards");
+            } else {
+                AlertBox.showDisplayMessage("Sucessful", txtName.getText()
+                        + " is now on Active Mode.GRNs can be raised from this customer now Onwards");
+            }
+            loadSuppliers();
+            clearFielsAndLoadAgain();
+        } else {
+            AlertBox.showErrorMessage("Error", "Try again with correct"
+                    + " Selection");
+        }
+        clearFielsAndLoadAgain();
     }
     
     

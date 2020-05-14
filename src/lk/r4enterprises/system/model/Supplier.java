@@ -10,34 +10,44 @@ package lk.r4enterprises.system.model;
  * @author shanil
  */
 public class Supplier {
+
     private String sid;
     private String name;
     private String email;
     private String address;
     private String mobile;
+    private String status;
 
     public Supplier() {
     }
 
-    public Supplier(String sid, String name, String email, String address, String mobile) {
-        this.sid = sid;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.mobile = mobile;
-    }
-
     @Override
     public String toString() {
-        return "Supplier{" + "sid=" + sid + ", name=" + name + ", email=" + email + ", address=" + address + ", mobile=" + mobile + '}';
+        return "Supplier{" + "sid=" + sid + ", name=" + name + ", email=" + email + ", address=" + address + ", mobile=" + mobile + ", status=" + status + '}';
     }
 
-    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     /**
      * @return the sid
      */
     public String getSid() {
         return sid;
+    }
+
+    public Supplier(String sid, String name, String email, String address, String mobile, String status) {
+        this.sid = sid;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.mobile = mobile;
+        this.status = status;
     }
 
     /**
@@ -103,8 +113,4 @@ public class Supplier {
         this.mobile = mobile;
     }
 
-
-
-
-    
 }

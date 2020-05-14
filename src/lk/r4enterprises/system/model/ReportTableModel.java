@@ -5,8 +5,7 @@
  */
 package lk.r4enterprises.system.model;
 
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
+import java.lang.reflect.Field;
 
 
 
@@ -394,6 +393,9 @@ public class ReportTableModel {
         this.quantity = quantity;
     }
 
+    public ReportTableModel() {
+    }
+
     /**
      * @return the itemCategory
      */
@@ -478,8 +480,14 @@ public class ReportTableModel {
         this.totalCreditNotes = totalCreditNotes;
     }
     
-    
-    
-    
+    public Object getFieldsByValues(ReportTableModel rs,String name) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException{
+        Field[] declaredFields = rs.getClass().getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            if (rs.getClass().getDeclaredField(name).equals(declaredField)) {
+                return declaredField.get(rs);
+            }
+        }
+        return null;
+    }
     
 }

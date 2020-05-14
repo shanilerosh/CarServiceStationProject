@@ -348,6 +348,7 @@ public class CustomerController implements Initializable {
         ps.setString(1, "%" + value + "%");
         ps.setString(2, "%" + value + "%");
         ps.setString(3, "%" + value + "%");
+        ps.setString(4, "%" + value + "%");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             customerList.add(new Customer(
@@ -355,7 +356,7 @@ public class CustomerController implements Initializable {
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5)
+                    rs.getInt(5)==1 ? "Active" : "Inactive"
             ));
         }
         return customerList;
@@ -527,10 +528,10 @@ public class CustomerController implements Initializable {
         if (makeActiveInactive(status)) {
             if (status.equals("Active")) {
                 AlertBox.showDisplayMessage("Sucessful", txtName.getText()
-                        + " is on Inactive Mode.No orders can be raised from this customer now Onwards");
+                        + " is now on Inactive Mode.No orders can be raised from this customer now Onwards");
             } else {
                 AlertBox.showDisplayMessage("Sucessful", txtName.getText()
-                        + " is on Active Mode.Orders can be raised from this customer now Onwards");
+                        + " is now on Active Mode.Orders can be raised from this customer now Onwards");
             }
             loadCustomers();
             clearFielsAndLoadAgain();

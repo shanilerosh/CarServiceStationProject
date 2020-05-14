@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2dc5a896-a3e9-47eb-bf96-2e0e13f9e93e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="481" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2dc5a896-a3e9-47eb-bf96-2e0e13f9e93e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="12"/>
+	<property name="ireport.y" value="232"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -572,7 +572,7 @@ Negombo]]></text>
 			<staticText>
 				<reportElement x="6" y="0" width="544" height="50" uuid="fdd1284c-b5c3-4850-a14a-bc145b1447db"/>
 				<textElement textAlignment="Justified"/>
-				<text><![CDATA[Please note that purchased item can be returned within 30 days from the date which is mentioned in the Order. And it is compulsory to bring this document in order to make the return.If any of the above conditions are not fulfilledwe have no choice but to not proceed with the return.]]></text>
+				<text><![CDATA[Please note that for all the cheque payments if there is a scenario where a cheque is returned it is the legal obligation of the customer to take responsibiity and pay it back through a reliable payment type]]></text>
 			</staticText>
 		</band>
 	</lastPageFooter>

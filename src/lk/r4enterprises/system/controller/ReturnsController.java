@@ -252,6 +252,7 @@ public class ReturnsController implements Initializable {
         txtInwardsOutwards.setText("");
         tblItemData.getItems().clear();
         comboxBoxReturn.requestFocus();
+        txtTotalValue.setText("");
     }
 
 

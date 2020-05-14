@@ -38,9 +38,15 @@
                <font>
                   <Font name="Roboto Condensed Regular" size="15.0" />
                </font></TextField>
-            <ComboBox fx:id="comboRole" layoutX="318.0" layoutY="59.0" prefWidth="150.0" />
-            <PasswordField fx:id="passwordBefore" layoutX="14.0" layoutY="99.0" prefHeight="31.0" prefWidth="277.0" />
-            <PasswordField fx:id="passwordRetype" layoutX="318.0" layoutY="99.0" prefHeight="31.0" prefWidth="277.0" />
+            <ComboBox fx:id="comboRole" layoutX="318.0" layoutY="59.0" prefWidth="150.0" promptText="Role" />
+            <PasswordField fx:id="passwordBefore" layoutX="14.0" layoutY="99.0" prefHeight="31.0" prefWidth="277.0" promptText="New Password">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font></PasswordField>
+            <PasswordField fx:id="passwordRetype" layoutX="318.0" layoutY="99.0" prefHeight="31.0" prefWidth="277.0" promptText="Re-Type password">
+               <font>
+                  <Font name="Roboto Condensed Regular" size="14.0" />
+               </font></PasswordField>
          </children>
       </AnchorPane>
       <Button fx:id="btnCreate" layoutX="38.0" layoutY="249.0" mnemonicParsing="false" onAction="#btnCreate_OnAction" onKeyPressed="#btnCreate_onKeyPressed" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #2D9069;" text="Create" textFill="WHITE">

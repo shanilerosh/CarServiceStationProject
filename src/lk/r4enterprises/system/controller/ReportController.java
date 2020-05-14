@@ -5,6 +5,8 @@
  */
 package lk.r4enterprises.system.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -15,6 +17,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,9 +28,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -33,6 +36,14 @@ import javafx.util.converter.LocalDateStringConverter;
 import lk.r4enterprises.system.model.ReportTableModel;
 import lk.r4enterprises.system.view.AlertBox;
 import lk.r4enterprises.system.view.AnimateComponent;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -53,11 +64,6 @@ public class ReportController implements Initializable {
     @FXML
     private Button btnUpdate;
     @FXML
-    private Button btnDelete;
-
-    @FXML
-    private TextField txtSearchDetail;
-    @FXML
     private TableView<ReportTableModel> tblReportData;
 
     @FXML
@@ -74,7 +80,7 @@ public class ReportController implements Initializable {
     NumberFormat format = NumberFormat.getCurrencyInstance(Locale.FRANCE);
 
     @FXML
-    private void btnCreate_OnAction(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
+    private void btnCreate_OnAction(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException, FileNotFoundException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         if (comboAreaOfChoice.getSelectionModel().isEmpty()) {
             AnimateComponent.animateEmptyField(comboSubCategories);
         } else if (comboSubCategories.getSelectionModel().isEmpty()) {
@@ -131,18 +137,6 @@ public class ReportController implements Initializable {
     }
 
     @FXML
-    private void btnUpdate_OnAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnDelete_OnAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void searchSupplier(KeyEvent event) {
-    }
-
-    @FXML
     private void mainPane_OnMouseClicked(MouseEvent event) {
     }
 
@@ -158,7 +152,7 @@ public class ReportController implements Initializable {
     }
 
     private void loadComboBoxData() {
-        comboAreaOfChoice.getItems().addAll("Sales", "Purchases", "Customer", "Supplier", "Profitability");
+        comboAreaOfChoice.getItems().addAll("Sales", "Purchases", "Customer", "Supplier", "Return");
         comboTimeDuration.getItems().addAll("Today", "Yesterday", "Last Week", "Last Month", "Last 6 month", "Last Year", "Between");
     }
 
@@ -179,7 +173,7 @@ public class ReportController implements Initializable {
             comboSubCategories.getItems().addAll("Payable Suppliers", "Debit Note");
         } else if (comboAreaOfChoice.getSelectionModel().isSelected(4)) {
             comboSubCategories.getItems().clear();
-            comboSubCategories.getItems().addAll("Sales Profit", "Item Wise Profit");
+            comboSubCategories.getItems().addAll("Customer Return", "Supplier Return");
         }
     }
 
@@ -220,10 +214,11 @@ public class ReportController implements Initializable {
 
     @FXML
     private void comboSubCategories_onAction(ActionEvent event) throws IOException {
+        tblReportData.getColumns().size();
 
     }
 
-    private void orderReportTable() throws ClassNotFoundException, SQLException, ParseException {
+    private void orderReportTable() throws ClassNotFoundException, SQLException, ParseException, IOException {
         TableColumn<ReportTableModel, String> colOid = new TableColumn<>("OID");
         colOid.setCellValueFactory(new PropertyValueFactory<>("oid"));
         colOid.setMinWidth(150);
@@ -241,8 +236,13 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(150);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colOid, colDate, colCustomerName, colDiscount, colAmount);
-        tblReportData.setItems(new OrderController().getOrdersByDates(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new OrderController().getOrdersByDates(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"oid","dateOfTransaction","customerName","discount","amount"};
+        createExcelFile(list,colNames,"OrderWise Sales Report"+" as at "+datePickerTo.getEditor().getText());
+        
     }
 
     private void setTotalValueAndCount() throws ParseException {
@@ -269,7 +269,7 @@ public class ReportController implements Initializable {
         return number.doubleValue();
     }
 
-    private void ItemWiseReportTabe() throws SQLException, ClassNotFoundException, ParseException {
+    private void ItemWiseReportTabe() throws SQLException, ClassNotFoundException, ParseException, IOException {
         TableColumn<ReportTableModel, String> coliid = new TableColumn<>("IID");
         coliid.setCellValueFactory(new PropertyValueFactory<>("iid"));
         coliid.setMinWidth(70);
@@ -290,11 +290,15 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(125);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(coliid, colItemModel, colItemName, colSoldQuantity, colPrice, colAmount);
-        tblReportData.setItems(new OrderDetailController().getItemSaleCountByDates(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new OrderDetailController().getItemSaleCountByDates(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"iid","itemModel","itemName","quantity","itemPrice","amount"};
+        createExcelFile(list,colNames,"ItemWise Sales Report"+" as at "+datePickerTo.getEditor().getText());
     }
 
-    private void CustomerWiseReportTabe() throws SQLException, ClassNotFoundException, ParseException {
+    private void CustomerWiseReportTabe() throws SQLException, ClassNotFoundException, ParseException, IOException {
         TableColumn<ReportTableModel, String> colCid = new TableColumn<>("CID");
         colCid.setCellValueFactory(new PropertyValueFactory<>("cid"));
         colCid.setMinWidth(70);
@@ -309,11 +313,17 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(400);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colCid, colCustomerName, colCustomerMobile, colAmount);
-        tblReportData.setItems(new OrderController().getCustomerWiseSale(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new OrderController().getCustomerWiseSale(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"cid","customerName","customerMobile","amount"};
+        createExcelFile(list,colNames,"Customer-Wise Sales Report"+" as at "+datePickerTo.getEditor().getText());
+        
+        
     }
 
-    private void CarWiseReportTabe() throws ParseException, ClassNotFoundException, SQLException {
+    private void CarWiseReportTabe() throws ParseException, ClassNotFoundException, SQLException, IOException {
         TableColumn<ReportTableModel, String> colCrid = new TableColumn<>("Car ID");
         colCrid.setCellValueFactory(new PropertyValueFactory<>("oid"));
         colCrid.setMinWidth(70);
@@ -331,12 +341,16 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(240);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colCrid, colRegNumber, colCustomerName, colModel, colAmount);
-        tblReportData.setItems(new OrderController().getCarWiseSale(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new OrderController().getCarWiseSale(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"oid","customerName","dateOfTransaction","discount","amount"};
+        createExcelFile(list,colNames,"Car-Wise Sales Report"+" as at "+datePickerTo.getEditor().getText());
 
     }
 
-    private void GRNWiseTable() throws ClassNotFoundException, ParseException, SQLException {
+    private void GRNWiseTable() throws ClassNotFoundException, ParseException, SQLException, IOException {
         TableColumn<ReportTableModel, String> colGrn = new TableColumn<>("GRN");
         colGrn.setCellValueFactory(new PropertyValueFactory<>("oid"));
         colGrn.setMinWidth(70);
@@ -354,11 +368,15 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(240);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colGrn, colGrDate, colSupplierName, colSupplierInvoice, colAmount);
-        tblReportData.setItems(new GRNController().getGRNWisePurchase(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new GRNController().getGRNWisePurchase(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"oid","customerName","dateOfTransaction","discount","amount"};
+        createExcelFile(list,colNames,"GRN-Wise Purchase Report"+" as at "+datePickerTo.getEditor().getText());
     }
 
-    private void ItemWisePurchaseTable() throws ParseException, ClassNotFoundException, SQLException {
+    private void ItemWisePurchaseTable() throws ParseException, ClassNotFoundException, SQLException, IOException {
         TableColumn<ReportTableModel, String> colIid = new TableColumn<>("Item ID");
         colIid.setCellValueFactory(new PropertyValueFactory<>("iid"));
         colIid.setMinWidth(70);
@@ -376,12 +394,16 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(240);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colIid, colItemModel, colItemName, colTotalQuantity, colAmount);
-        tblReportData.setItems(new GRNController().getItemWisePurchase(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new GRNController().getItemWisePurchase(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"iid","itemName","itemModel","quantity","amount"};
+        createExcelFile(list,colNames,"Iteme-Wise Purchase Report"+" as at "+datePickerTo.getEditor().getText());
 
     }
 
-    private void SupplierWisePurchaseTable() throws ParseException, ClassNotFoundException, SQLException {
+    private void SupplierWisePurchaseTable() throws ParseException, ClassNotFoundException, SQLException, IOException {
         TableColumn<ReportTableModel, String> colSid = new TableColumn<>("Supplier ID");
         colSid.setCellValueFactory(new PropertyValueFactory<>("sid"));
         colSid.setMinWidth(70);
@@ -396,12 +418,16 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(250);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colSid, colSupplierName, colTotalQty, colAmount);
-        tblReportData.setItems(new GRNController().getSupplierWisePurchase(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new GRNController().getSupplierWisePurchase(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"sid","supplierName","quantity","amount"};
+        createExcelFile(list,colNames,"Supplier-Wise Purchase Report"+" as at "+datePickerTo.getEditor().getText());
 
     }
 
-    private void CustomerWiseReceivableTable() throws ClassNotFoundException, SQLException, ParseException {
+    private void CustomerWiseReceivableTable() throws ClassNotFoundException, SQLException, ParseException, IOException {
         TableColumn<ReportTableModel, String> colCustIid = new TableColumn<>("Customer ID");
         colCustIid.setCellValueFactory(new PropertyValueFactory<>("cid"));
         colCustIid.setMinWidth(70);
@@ -425,12 +451,16 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(160);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colCustIid, colCustomerName, colTotalOrders, colTotalReceipt, colTotalReturn, colTotalCreditNotes, colAmount);
-        tblReportData.setItems(new CustomerController().getReceivableCustomer());
+        ObservableList<ReportTableModel> list = new CustomerController().getReceivableCustomer();
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"cid","customerName","totalOrder","totalReceipts","totalReturns","totalCreditNotes","amount"};
+        createExcelFile(list,colNames,"Customer-Wise Receivable Report");
 
     }
 
-    private void CreditNoteTable() throws ClassNotFoundException, SQLException, ParseException {
+    private void CreditNoteTable() throws ClassNotFoundException, SQLException, ParseException, IOException {
         TableColumn<ReportTableModel, String> colCnid = new TableColumn<>("CN Id");
         colCnid.setCellValueFactory(new PropertyValueFactory<>("cid"));
         colCnid.setMinWidth(70);
@@ -445,11 +475,15 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(250);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colCnid, colDateOfTransaction, colCustomerName, colAmount);
-        tblReportData.setItems(new CreditAndDebitNoteController().getAllCreditNotes(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new CreditAndDebitNoteController().getAllCreditNotes(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"cid","customerName","customerMobile","amount"};
+        createExcelFile(list,colNames,"Credit Note report"+" as at "+datePickerTo.getEditor().getText());
     }
 
-    private void SupplierWiseReceivableTable() throws ParseException, ClassNotFoundException, SQLException {
+    private void SupplierWiseReceivableTable() throws ParseException, ClassNotFoundException, SQLException, IOException {
         TableColumn<ReportTableModel, String> colSupIid = new TableColumn<>("Supplier ID");
         colSupIid.setCellValueFactory(new PropertyValueFactory<>("cid"));
         colSupIid.setMinWidth(70);
@@ -473,11 +507,15 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(160);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colSupIid, colSupplierName, colTotalGRNs, colTotalPayment, colTotalReturn, colTotalDebitNotes, colAmount);
-        tblReportData.setItems(new SupplierController().getPayableSuppliers());
+        ObservableList<ReportTableModel> list = new SupplierController().getPayableSuppliers();
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+        
+        String[] colNames={"cid","customerName","totalOrder","totalReceipts","totalReturns","totalCreditNotes","amount"};
+        createExcelFile(list,colNames,"Supplier-Wise Receivable Report");
     }
 
-    private void DebitNoteTable() throws ClassNotFoundException, SQLException, ParseException {
+    private void DebitNoteTable() throws ClassNotFoundException, SQLException, ParseException, FileNotFoundException, IOException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         TableColumn<ReportTableModel, String> colDnid = new TableColumn<>("DN Id");
         colDnid.setCellValueFactory(new PropertyValueFactory<>("cid"));
         colDnid.setMinWidth(70);
@@ -492,8 +530,14 @@ public class ReportController implements Initializable {
         colAmount.setMinWidth(250);
         tblReportData.getColumns().clear();
         tblReportData.getColumns().addAll(colDnid, colDateOfTransaction, colSupplierName, colAmount);
-        tblReportData.setItems(new CreditAndDebitNoteController().getAllDebitNotes(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
+        ObservableList<ReportTableModel> list = new CreditAndDebitNoteController().getAllDebitNotes(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText());
+        tblReportData.setItems(list);
         setTotalValueAndCount();
+
+        String[] columns = {"cid", "customerName", "customerMobile", "amount"};
+        createExcelFile(list, columns, "DebitNoteListing as at "+datePickerTo.getEditor().getText());
+
+
     }
 
     private void SalesProfitTable() throws ParseException, ClassNotFoundException, SQLException {
@@ -516,9 +560,67 @@ public class ReportController implements Initializable {
         colNetProfit.setCellValueFactory(new PropertyValueFactory<>("amount"));
         colNetProfit.setMinWidth(250);
         tblReportData.getColumns().clear();
-        tblReportData.getColumns().addAll(colOrderId,colDate,colCustomerName,colOrderAmount,colExpenses,colNetProfit);
+        tblReportData.getColumns().addAll(colOrderId, colDate, colCustomerName, colOrderAmount, colExpenses, colNetProfit);
         tblReportData.setItems(new OrderController().getProfitPerOrder(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
         setTotalValueAndCount();
+    }
+
+    @FXML
+    private void btnExport_OnAction(ActionEvent event) {
+        if (tblReportData.getItems().isEmpty()) {
+            btnCreate.fire();
+        }
+
+    }
+
+    private void createExcelFile(ObservableList<ReportTableModel> list, String[] columnNames, String reportName) throws IOException {
+        boolean isExport = AlertBox.showConfMessage("Do you want to export this to An Excel File?", "Export to Excel?");
+        
+        if(isExport){
+            FileOutputStream fileOut = null;
+            try {
+                Workbook workBook = new XSSFWorkbook();
+                Sheet sheet = workBook.createSheet(reportName);
+                Font headFont = workBook.createFont();
+                headFont.setBold(true);
+                headFont.setFontHeightInPoints((short) 10);
+                headFont.setColor(IndexedColors.RED.getIndex());
+                CellStyle headerCellStyle = workBook.createCellStyle();
+                headerCellStyle.setFont(headFont);
+                Row headerrow = sheet.createRow(0);
+                for (int i = 0; i < columnNames.length; i++) {
+                    Cell cell = headerrow.createCell(i);
+                    cell.setCellValue(tblReportData.getColumns().get(i).getText());
+                    cell.setCellStyle(headerCellStyle);
+                }       int rowNumber = 1;
+                for (ReportTableModel rb : list) {
+                    Row row = sheet.createRow(rowNumber++);
+                    for (int i = 0; i < columnNames.length; i++) {
+                        try {
+                            Object value = new ReportTableModel().getFieldsByValues(rb, columnNames[i]);
+                            row.createCell(i).setCellValue(value.toString());
+                        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException ex) {
+                            Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }       for (int i = 0; i < tblReportData.getColumns().size(); i++) {
+                    sheet.autoSizeColumn(i);
+                }       fileOut = new FileOutputStream(reportName + ".xlsx");
+                workBook.write(fileOut);
+                fileOut.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    fileOut.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        else{
+            AlertBox.showDisplayMessage("Data is loaded to the below table", "Data into Table");
+        }
     }
 
 }

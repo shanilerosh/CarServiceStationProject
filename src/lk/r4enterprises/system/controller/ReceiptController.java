@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -419,6 +420,8 @@ public class ReceiptController implements Initializable{
     @FXML
     private void txtAmount_onKeyTyped(KeyEvent event) {
         TextFieldEventsHandling.allowOnlyNumbers(event);
+        
+       
     }
 
     @FXML
@@ -454,6 +457,16 @@ public class ReceiptController implements Initializable{
             para.put("ReceiptID", rid);
             JasperPrint jp=JasperFillManager.fillReport(ja,para,DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jp,false);
+    }
+
+    @FXML
+    private void txtAmount_onTextChanged(InputMethodEvent event) {
+        
+    }
+
+    @FXML
+    private void txtAmount_onKeyReleased(KeyEvent event) {
+        
     }
     
 
