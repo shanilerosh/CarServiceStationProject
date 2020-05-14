@@ -62,7 +62,7 @@
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnDiscontnuedContinued" layoutX="506.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnDiscontnuedContinued_OnAction" prefHeight="31.0" prefWidth="195.0" style="-fx-background-color: #D32A26;" text="Make Discontinued/Continued" textFill="WHITE">
+      <Button fx:id="btnDiscontnuedContinued" layoutX="506.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnDiscontnuedContinued_OnAction" prefHeight="31.0" prefWidth="195.0" style="-fx-background-color: #D32A26;" text="Make Item Con/Discon" textFill="WHITE">
          <font>
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>

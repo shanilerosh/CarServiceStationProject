@@ -161,7 +161,6 @@ public class ItemController implements Initializable {
 
     private boolean MakeItemDisCon(String status) throws SQLException,
         ClassNotFoundException {
-        System.out.println(status);
         Connection con = DBConnection.getInstance().getConnection();
         String sql = "UPDATE Item SET continuity=? WHERE iid=?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -301,10 +300,9 @@ public class ItemController implements Initializable {
                     rs.getDouble(4),
                     rs.getString(5),
                     rs.getInt(6),
-                    rs.getString(7)
+                    rs.getInt(7)==1 ? "Con" : "Discon"
             );
         }
-        System.out.println(foundItem.getName());
         return foundItem;
     }
 
@@ -323,7 +321,7 @@ public class ItemController implements Initializable {
                     rs.getDouble(4),
                     rs.getString(5),
                     rs.getInt(6),
-                    rs.getString(7)
+                    rs.getInt(7)==1 ? "Con" : "Discon"
             );
         }
         return foundItem;
@@ -340,7 +338,7 @@ public class ItemController implements Initializable {
         ps.setDouble(4, Double.parseDouble(txtUnitPrice.getText()));
         ps.setString(5, comboCategory.getSelectionModel().getSelectedItem());
         ps.setInt(6, Integer.parseInt(txtItemOnHand.getText()));
-        ps.setString(7, "true");
+        ps.setInt(7, 1);
         return ps.executeUpdate() > 0;
     }
 

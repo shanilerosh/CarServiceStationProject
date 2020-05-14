@@ -51,7 +51,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.control.textfield.TextFields;
@@ -136,9 +135,7 @@ public class OrderController implements Initializable {
             loadTable();
             setOrderId();
             clearAllFields();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         btnAddItem.setDisable(true);
@@ -217,10 +214,9 @@ public class OrderController implements Initializable {
             } else {
                 int quantityOnHand = item.getQuantityOnHand();
                 int requested = Integer.parseInt(txtQuantity.getText());
-                if(!item.getContinuity().equals("Con")){
-                     AlertBox.showErrorMessage("Error", "This Item is Discontinued.Please request the admin to make it Continue to proceed the order");
-                }
-                else if (quantityOnHand < requested) {
+                if (!item.getContinuity().equals("Con")) {
+                    AlertBox.showErrorMessage("Error", "This Item is Discontinued.Please request the admin to make it Continue to proceed the order");
+                } else if (quantityOnHand < requested) {
                     AlertBox.showErrorMessage("Error", "Requested stock is out of "
                             + "quantity.Please check the existing balance and place the order");
                     txtQuantity.clear();
@@ -320,8 +316,10 @@ public class OrderController implements Initializable {
         } else {
             customer = new CustomerController().getCustomerFromName(txtName.getText());
             if (customer == null) {
-                customer = new Customer(new CustomerController().getLatestCid(), txtAddress.getText(), txtName.getText(), txtMobile.getText());
+                customer = new Customer(new CustomerController().getLatestCid(), txtAddress.getText(), txtName.getText(), txtMobile.getText(), "1");
                 isSave = new CustomerController().addCustomer(customer);
+            } else if (!customer.getActiveInactive().equals("Active")) {
+                AlertBox.showErrorMessage("Error", customer.getName() + " is Inactive.Ask the Admin to make him/her active in Order to proceed with the Order");
             } else {
                 customer.setAddress(txtAddress.getText());
                 customer.setMobileNumber(txtMobile.getText());
@@ -329,7 +327,9 @@ public class OrderController implements Initializable {
             }
 
             if (!isSave) {
+                AlertBox.showErrorMessage("Error", "Transaction was not successful");
                 con.rollback();
+                clearAllFields();
             } else {
                 car = new CarController().getCarFromRegistration(txtVehicleRegistrationNumber.getText());
                 if (car == null) {
@@ -456,6 +456,7 @@ public class OrderController implements Initializable {
         txtModel.clear();
         txtName.clear();
         txtNetValue.setText("0.00");
+        txtTotalValue.setText("0.00");
         txtQuantityOnHand.setText("0");
         tblOrder.getItems().clear();
         txtName.requestFocus();
@@ -726,7 +727,6 @@ public class OrderController implements Initializable {
         ps.setString(2, dateTo);
         ResultSet rs = ps.executeQuery();
 
-        
         ListIterator<ReportTableModel> iterator = list.listIterator();
         while (rs.next()) {
             ReportTableModel model = new ReportTableModel(rs.getString(1),
@@ -738,7 +738,7 @@ public class OrderController implements Initializable {
                     rs.getString(8)
             );
             iterator.add(model);
-            if(iterator.previous().getOid().equals(model.getOid())){
+            if (iterator.previous().getOid().equals(model.getOid())) {
                 model.setAmount("123");
                 iterator.remove();
             }

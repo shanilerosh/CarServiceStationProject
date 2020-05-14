@@ -14,16 +14,29 @@ public class Customer {
     private String name;
     private String address;
     private String mobileNumber;    
+    private String activeInactive;    
 
-    public Customer(String cid, String address,String name,String mobileNumber) {
+    
+    public Customer() {
+    }
+
+    public Customer(String cid, String name, String address, String mobileNumber, String activeInactive) {
         this.cid = cid;
         this.name = name;
         this.address = address;
         this.mobileNumber = mobileNumber;
+        this.activeInactive = activeInactive;
     }
 
-    public Customer() {
+    public String getActiveInactive() {
+        return activeInactive;
     }
+
+    public void setActiveInactive(String activeInactive) {
+        this.activeInactive = activeInactive;
+    }
+    
+    
 
     @Override
     public String toString() {

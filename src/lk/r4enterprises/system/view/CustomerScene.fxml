@@ -51,12 +51,12 @@
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="462.0" layoutY="249.0" mnemonicParsing="false" onAction="#btnUpdate_onAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #FC8B04;" text="Update" textFill="WHITE">
+      <Button fx:id="btnUpdate" layoutX="439.0" layoutY="249.0" mnemonicParsing="false" onAction="#btnUpdate_onAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #FC8B04;" text="Update" textFill="WHITE">
          <font>
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="597.0" layoutY="249.0" mnemonicParsing="false" onAction="#btnDelete_OnAction" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #D32A26;" text="Delete" textFill="WHITE">
+      <Button fx:id="btnActiveInactive" layoutX="572.0" layoutY="249.0" mnemonicParsing="false" onAction="#btnActiveInactive_OnAction" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #D32A26;" text=" Active/Inactive" textFill="WHITE">
          <font>
             <Font name="Roboto Condensed Regular" size="14.0" />
          </font>
@@ -66,7 +66,8 @@
           <TableColumn fx:id="colCid" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="colName" prefWidth="145.0" text="Name" />
             <TableColumn fx:id="colCnumber" prefWidth="156.0" resizable="false" text="Contct Number" />
-            <TableColumn fx:id="colAdress" prefWidth="314.0" resizable="false" text="Address" />
+            <TableColumn fx:id="colAdress" prefWidth="245.0" resizable="false" text="Address" />
+            <TableColumn fx:id="colStatus" prefWidth="70.0" resizable="false" text="Status" />
         </columns>
          <effect>
             <Blend />
