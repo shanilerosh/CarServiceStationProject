@@ -160,7 +160,7 @@ public class ItemController implements Initializable {
     }
 
     private boolean MakeItemDisCon(String status) throws SQLException,
-        ClassNotFoundException {
+            ClassNotFoundException {
         Connection con = DBConnection.getInstance().getConnection();
         String sql = "UPDATE Item SET continuity=? WHERE iid=?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -189,7 +189,6 @@ public class ItemController implements Initializable {
         ps.setString(4, "%" + value + "%");
         ps.setString(5, "%" + value + "%");
         ps.setString(6, "%" + value + "%");
-        ps.setString(7, "%" + value + "%");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             itemList.add(new Item(
@@ -259,7 +258,7 @@ public class ItemController implements Initializable {
     private void loadItems() throws ClassNotFoundException, SQLException {
         tblItemData.setItems(getAllItems());
         tblItemData.getColumns().clear();
-        tblItemData.getColumns().addAll(colIid, colName, colCategory, colUnitPrice, colModel, colQtyOnHand,colStatus);
+        tblItemData.getColumns().addAll(colIid, colName, colCategory, colUnitPrice, colModel, colQtyOnHand, colStatus);
         setItemId();
     }
 
@@ -300,7 +299,7 @@ public class ItemController implements Initializable {
                     rs.getDouble(4),
                     rs.getString(5),
                     rs.getInt(6),
-                    rs.getInt(7)==1 ? "Con" : "Discon"
+                    rs.getInt(7) == 1 ? "Con" : "Discon"
             );
         }
         return foundItem;
@@ -321,7 +320,7 @@ public class ItemController implements Initializable {
                     rs.getDouble(4),
                     rs.getString(5),
                     rs.getInt(6),
-                    rs.getInt(7)==1 ? "Con" : "Discon"
+                    rs.getInt(7) == 1 ? "Con" : "Discon"
             );
         }
         return foundItem;
@@ -388,8 +387,6 @@ public class ItemController implements Initializable {
     @FXML
     private void tblItemData_OnMouseClicked(MouseEvent event) {
         if (tblItemData.getSelectionModel().getSelectedIndex() >= 0) {
-            btnDiscontnuedContinued.setDisable(false);
-            btnUpdate.setDisable(false);
             Item selected = tblItemData.getSelectionModel().getSelectedItem();
             txtIid.setText(selected.getIid());
             comboCategory.getSelectionModel().select(selected.getCategory());
@@ -397,6 +394,8 @@ public class ItemController implements Initializable {
             txtName.setText(selected.getName());
             txtUnitPrice.setText(Double.toString(selected.getUnitPrice()));
             txtItemOnHand.setText(Integer.toString(selected.getQuantityOnHand()));
+            btnDiscontnuedContinued.setDisable(false);
+            btnUpdate.setDisable(false);
         } else {
             AlertBox.showErrorMessage("Error", "Selection on the table is not valid");
         }

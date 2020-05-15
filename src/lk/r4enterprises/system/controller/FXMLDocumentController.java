@@ -82,10 +82,10 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void btnCustomer_OnAction(ActionEvent event) throws IOException {
-        FXMLLoader fXMLLoader=new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/CustomerScene.fxml"));
-        Parent root=fXMLLoader.load();
+        FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/CustomerScene.fxml"));
+        Parent root = fXMLLoader.load();
         root.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/general.css").toExternalForm());
-        CustomerController customerController=fXMLLoader.<CustomerController>getController();
+        CustomerController customerController = fXMLLoader.<CustomerController>getController();
         customerController.setUserInformation(user);
         borderPane.setCenter(root);
         new BounceInUp(root).play();
@@ -99,7 +99,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void btnSupplier_OnAction(ActionEvent event) throws IOException {
         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/SupplierScene.fxml"));
-        Parent root=fXMLLoader.load();
+        Parent root = fXMLLoader.load();
         SupplierController controller = fXMLLoader.<SupplierController>getController();
         controller.setUser(user);
         root.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/general.css").toExternalForm());
@@ -110,12 +110,12 @@ public class FXMLDocumentController implements Initializable {
 
     public void setUser(User user) {
         this.user = user;
-        if(this.user.getRole().equals("Cashier")){
+        if (this.user.getRole().equals("Cashier")) {
             btnOrder.setDisable(true);
             btnGrn.setDisable(true);
             btnReturn.setDisable(true);
             btnReports.setDisable(true);
-        }else if(this.user.getRole().equals("Invoice Officer")){
+        } else if (this.user.getRole().equals("Invoice Officer")) {
             btnReceipt.setDisable(true);
             btnPayment.setDisable(true);
             btnDebitCreditNote.setDisable(true);
@@ -128,8 +128,6 @@ public class FXMLDocumentController implements Initializable {
         loadDate();
     }
 
-    
-
     @FXML
     private void btnOrder_OnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/lk/r4enterprises/system/view/Order.fxml"));
@@ -141,9 +139,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void btnItem_onAction(ActionEvent event) throws IOException {
         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/Item.fxml"));
-        Parent root=fXMLLoader.load();
-        ItemController controller = fXMLLoader.<ItemController>getController();
+        Parent root = fXMLLoader.load();
         root.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/general.css").toExternalForm());
+        ItemController controller = fXMLLoader.<ItemController>getController();
+        controller.setUser(user);
         borderPane.setCenter(root);
         new BounceInUp(root).play();
     }
@@ -215,9 +214,9 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void btnDashboard_onAction(ActionEvent event){
+    private void btnDashboard_onAction(ActionEvent event) {
         loadDashboard();
-    
+
     }
 
     private void loadDate() {
@@ -235,17 +234,17 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void loadDashboard(){
+    public void loadDashboard() {
         Parent root;
         try {
             root = FXMLLoader.load(getClass().getResource("/lk/r4enterprises/system/view/Dashboard.fxml"));
             root.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/general.css").toExternalForm());
-        borderPane.setCenter(root);
-        new BounceInUp(root).play();
+            borderPane.setCenter(root);
+            new BounceInUp(root).play();
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     @FXML
@@ -256,7 +255,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void iconSetting_onMouseClicked(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/User.fxml"));
-        Parent root=fXMLLoader.load();
+        Parent root = fXMLLoader.load();
         UserController controller = fXMLLoader.<UserController>getController();
         controller.setUser(user);
         root.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/general.css").toExternalForm());
