@@ -182,15 +182,9 @@ public class OrderController implements Initializable {
         if (!txtItemModel.getText().isEmpty() && new ItemController().checkItemExist(txtItemModel.getText())) {
             Item item = new ItemController().getItemFromModel(txtItemModel.getText());
 
-            if (item.getCategory().equals("Service")) {
-                txtQuantityOnHand.setText("Service");
-                btnAddItem.setDisable(false);
-            } else {
-                int qtyOnHand = item.getQuantityOnHand();
-                txtQuantityOnHand.setText(Integer.toString(qtyOnHand));
-                btnAddItem.setDisable(false);
-            }
-
+            int qtyOnHand = item.getQuantityOnHand();
+            txtQuantityOnHand.setText(Integer.toString(qtyOnHand));
+            btnAddItem.setDisable(false);
         } else {
             AlertBox.showErrorMessage("Error", "Item Model is wrong");
             txtQuantity.clear();
@@ -316,7 +310,7 @@ public class OrderController implements Initializable {
         } else {
             customer = new CustomerController().getCustomerFromName(txtName.getText());
             if (customer == null) {
-                customer = new Customer(new CustomerController().getLatestCid(), txtAddress.getText(), txtName.getText(), txtMobile.getText(), "1");
+                customer = new Customer(new CustomerController().getLatestCid(), txtName.getText(), txtAddress.getText(), txtMobile.getText(), "1");
                 isSave = new CustomerController().addCustomer(customer);
             } else if (!customer.getActiveInactive().equals("Active")) {
                 AlertBox.showErrorMessage("Error", customer.getName() + " is Inactive.Ask the Admin to make him/her active in Order to proceed with the Order");
@@ -352,9 +346,7 @@ public class OrderController implements Initializable {
 
                     Item item = new ItemController().getItemFromIid(itemCode);
 
-                    if (!item.getCategory().equals("Service")) {
-                        list.add(new OrderDetail(itemCode, orderId, qty, price));
-                    }
+                    list.add(new OrderDetail(itemCode, orderId, qty, price));
                 }
 
                 double discount = txtDiscount.getText().isEmpty() ? 0 : Double.parseDouble(txtDiscount.getText());

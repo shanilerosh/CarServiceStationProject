@@ -126,9 +126,6 @@ public class ReportController implements Initializable {
                 case "Debit Note":
                     DebitNoteTable();
                     break;
-                case "Sales Profit":
-                    SalesProfitTable();
-                    break;
 
             }
 
@@ -152,7 +149,7 @@ public class ReportController implements Initializable {
     }
 
     private void loadComboBoxData() {
-        comboAreaOfChoice.getItems().addAll("Sales", "Purchases", "Customer", "Supplier", "Return");
+        comboAreaOfChoice.getItems().addAll("Sales", "Purchases", "Customer", "Supplier");
         comboTimeDuration.getItems().addAll("Today", "Yesterday", "Last Week", "Last Month", "Last 6 month", "Last Year", "Between");
     }
 
@@ -171,9 +168,6 @@ public class ReportController implements Initializable {
         } else if (comboAreaOfChoice.getSelectionModel().isSelected(3)) {
             comboSubCategories.getItems().clear();
             comboSubCategories.getItems().addAll("Payable Suppliers", "Debit Note");
-        } else if (comboAreaOfChoice.getSelectionModel().isSelected(4)) {
-            comboSubCategories.getItems().clear();
-            comboSubCategories.getItems().addAll("Customer Return", "Supplier Return");
         }
     }
 
@@ -540,31 +534,7 @@ public class ReportController implements Initializable {
 
     }
 
-    private void SalesProfitTable() throws ParseException, ClassNotFoundException, SQLException {
-        TableColumn<ReportTableModel, String> colOrderId = new TableColumn<>("Order Id");
-        colOrderId.setCellValueFactory(new PropertyValueFactory<>("oid"));
-        colOrderId.setMinWidth(70);
-        TableColumn<ReportTableModel, String> colOrderAmount = new TableColumn<>("Order Amount");
-        colOrderAmount.setCellValueFactory(new PropertyValueFactory<>("totalOrder"));
-        colOrderAmount.setMinWidth(250);
-        TableColumn<ReportTableModel, String> colCustomerName = new TableColumn<>("Customer Name");
-        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        colCustomerName.setMinWidth(250);
-        TableColumn<ReportTableModel, String> colDate = new TableColumn<>("Date of Trans");
-        colDate.setCellValueFactory(new PropertyValueFactory<>("dateOfTransaction"));
-        colDate.setMinWidth(250);
-        TableColumn<ReportTableModel, String> colExpenses = new TableColumn<>("Cost per order");
-        colExpenses.setCellValueFactory(new PropertyValueFactory<>("cost"));
-        colExpenses.setMinWidth(250);
-        TableColumn<ReportTableModel, Integer> colNetProfit = new TableColumn<>("Net Profit");
-        colNetProfit.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        colNetProfit.setMinWidth(250);
-        tblReportData.getColumns().clear();
-        tblReportData.getColumns().addAll(colOrderId, colDate, colCustomerName, colOrderAmount, colExpenses, colNetProfit);
-        tblReportData.setItems(new OrderController().getProfitPerOrder(datePickerFrom.getEditor().getText(), datePickerTo.getEditor().getText()));
-        setTotalValueAndCount();
-    }
-
+    
     @FXML
     private void btnExport_OnAction(ActionEvent event) {
         if (tblReportData.getItems().isEmpty()) {
@@ -610,13 +580,7 @@ public class ReportController implements Initializable {
                 fileOut.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    fileOut.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            } 
         }
         else{
             AlertBox.showDisplayMessage("Data is loaded to the below table", "Data into Table");

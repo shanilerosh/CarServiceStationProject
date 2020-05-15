@@ -63,7 +63,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void btnLogin_OnAction(ActionEvent event){
+    private void btnLogin_OnAction(ActionEvent event) {
         if (txtUserName.getText().isEmpty()) {
             new Shake(txtUserName).play();
             txtUserName.setStyle("-fx-border-color:#ff0000");
@@ -76,25 +76,25 @@ public class LoginController implements Initializable {
             pause.play();
         } else {
             userInformation = getUserInformation(txtUserName.getText(), txtPassword.getText());
-            
+
             if (userInformation != null) {
-                if(!userInformation.getStatus().equals("Active")){
+                if (!userInformation.getStatus().equals("Active")) {
                     AlertBox.showErrorMessage("Not active", "You account is on Non active Mode.Please request the Admin to make it 'Active' in order to Login");
                     txtUserName.clear();
                     txtPassword.clear();
-                }else{
+                } else {
                     try {
                         Node node = (Node) event.getSource();
                         Stage stage = (Stage) node.getScene().getWindow();
-                        
+
                         stage.close();
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/lk/r4enterprises/system/view/FXMLDocument.fxml"));
                         Parent parent = fxmlLoader.load();
                         FXMLDocumentController controller = fxmlLoader.<FXMLDocumentController>getController();
                         controller.setUser(userInformation);
-                        controller.setTxtLoginUserName(userInformation.getRole()+" : "+userInformation.getUserName());
+                        controller.setTxtLoginUserName(userInformation.getRole() + " : " + userInformation.getUserName());
                         Scene scene = new Scene(parent);
-                        
+
                         scene.getStylesheets().add(getClass().getResource("/lk/r4enterprises/system/view/mainmenue.css").toExternalForm());
                         stage.setScene(scene);
                         stage.show();

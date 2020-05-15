@@ -128,7 +128,6 @@ public class ReceiptController implements Initializable{
                
                
            boolean isAdded=addReceipt(receipt);
-           System.out.println("boolean ="+isAdded);
            
            if(isAdded){
                tblReceiptData.getItems().add(new ReceiptTableModel(

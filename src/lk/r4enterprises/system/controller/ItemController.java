@@ -335,7 +335,7 @@ public class ItemController implements Initializable {
         ps.setString(2, txtName.getText());
         ps.setString(3, comboCategory.getSelectionModel().getSelectedItem());
         ps.setDouble(4, Double.parseDouble(txtUnitPrice.getText()));
-        ps.setString(5, comboCategory.getSelectionModel().getSelectedItem());
+        ps.setString(5, txtModel.getText());
         ps.setInt(6, Integer.parseInt(txtItemOnHand.getText()));
         ps.setInt(7, 1);
         return ps.executeUpdate() > 0;

@@ -44,8 +44,7 @@ public class SupplierController implements Initializable {
 
     @FXML
     private AnchorPane mainPane;
-    
-    
+
     @FXML
     private TableView<Supplier> tblSupplierData;
     @FXML
@@ -58,12 +57,12 @@ public class SupplierController implements Initializable {
     private TableColumn<Supplier, String> colAddress;
     @FXML
     private TableColumn<Supplier, String> colMobileNumber;
-    
+
     @FXML
     private Text txtSid;
     @FXML
     private TextField txtEmail;
-    
+
     @FXML
     private TextField txtAddress;
     @FXML
@@ -72,12 +71,12 @@ public class SupplierController implements Initializable {
     private Button btnCreate;
     @FXML
     private Button btnUpdate;
-    
+
     @FXML
     private TextField txtName;
     @FXML
     private TextField txtsearchSupplier;
-    
+
     private User user;
     @FXML
     private Button btnActiveInactive;
@@ -86,119 +85,112 @@ public class SupplierController implements Initializable {
 
     @FXML
     private void btnCreate_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
-        if(txtName.getText().isEmpty()){
+        if (txtName.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtName);
-        }else if(txtMobileNumber.getText().isEmpty()){
+        } else if (txtMobileNumber.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtMobileNumber);
-        }
-        else{
-            if(addSupplier()){
-                tblSupplierData.getItems().add(
-                new Supplier(
-                    txtSid.getText(),
-                    txtName.getText(),
-                    txtEmail.getText(),
-                    txtAddress.getText(),
-                    txtMobileNumber.getText(),
-                    "Active"
-               ));
-                AlertBox.showDisplayMessage("Successful", txtName.getText()
-                        +"added Succesfully");
-                loadSuppliers();
+        } else if (addSupplier()) {
+            tblSupplierData.getItems().add(
+                    new Supplier(
+                            txtSid.getText(),
+                            txtName.getText(),
+                            txtEmail.getText(),
+                            txtAddress.getText(),
+                            txtMobileNumber.getText(),
+                            "Active"
+                    ));
+            AlertBox.showDisplayMessage("Successful", txtName.getText()
+                    + "added Succesfully");
+            loadSuppliers();
 
-            }else{
-                AlertBox.showErrorMessage("Error", "Try again");
-                loadSuppliers();
-            }
+        } else {
+            AlertBox.showErrorMessage("Error", "Try again");
+            loadSuppliers();
         }
-       clearFielsAndLoadAgain();
+        clearFielsAndLoadAgain();
     }
 
     public void setUser(User user) {
         this.user = user;
-        if(!user.getRole().equals("Admin")){
+        if (!user.getRole().equals("Admin")) {
             btnActiveInactive.setVisible(false);
             btnUpdate.setVisible(false);
         }
-        
-        
+
     }
 
     @FXML
     private void btnUpdate_OnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        boolean confirmation = AlertBox.showConfMessage("Are you sure to update "+txtSid.getText(), "Confirmation");
-            if(confirmation){
-                if(txtName.getText().isEmpty()){
+        boolean confirmation = AlertBox.showConfMessage("Are you sure to update " + txtSid.getText(), "Confirmation");
+        if (confirmation) {
+            if (txtName.getText().isEmpty()) {
                 AnimateComponent.animateEmptyField(txtName);
-            }else if(txtMobileNumber.getText().isEmpty()){
+            } else if (txtMobileNumber.getText().isEmpty()) {
                 AnimateComponent.animateEmptyField(txtMobileNumber);
-            }
-            else{
+            } else {
                 updateSupplier();
-                AlertBox.showDisplayMessage("Sucessful", txtSid.getText()+
-                        " succesfully updated.");
+                AlertBox.showDisplayMessage("Sucessful", txtSid.getText()
+                        + " succesfully updated.");
                 loadSuppliers();
             }
-            
-            }
-            
-            
+
+        }
+
     }
-    
-    public boolean updateSupplier() throws SQLException, ClassNotFoundException{
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="UPDATE Supplier SET name=?,email=?,adress=?,mobile=? WHERE sid=?";
-        PreparedStatement ps=con.prepareStatement(sql);
+
+    public boolean updateSupplier() throws SQLException, ClassNotFoundException {
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "UPDATE Supplier SET name=?,email=?,adress=?,mobile=? WHERE sid=?";
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, txtName.getText());
         ps.setString(2, txtEmail.getText());
         ps.setString(3, txtAddress.getText());
         ps.setString(4, txtMobileNumber.getText());
         ps.setString(5, txtSid.getText());
-        return ps.executeUpdate()>0;
+        return ps.executeUpdate() > 0;
     }
 
-    
-    private boolean makeActiveInactive(String status) throws SQLException, 
+    private boolean makeActiveInactive(String status) throws SQLException,
             ClassNotFoundException {
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="UPDATE Supplier set status=? WHERE sid=?";
-        PreparedStatement ps=con.prepareStatement(sql);
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "UPDATE Supplier set status=? WHERE sid=?";
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, status.equals("Active") ? 0 : 1);
         ps.setString(2, txtSid.getText());
-        return ps.executeUpdate()>0;
+        return ps.executeUpdate() > 0;
     }
 
     @FXML
     private void searchSupplier(KeyEvent event) throws SQLException, ClassNotFoundException {
-        String value=txtsearchSupplier.getText();
+        String value = txtsearchSupplier.getText();
         tblSupplierData.setItems(loadSupplierByFields(value));
     }
-    
+
     private ObservableList<Supplier> loadSupplierByFields(String value) throws
             SQLException, ClassNotFoundException {
-        ObservableList<Supplier> suplierList=FXCollections.
+        ObservableList<Supplier> suplierList = FXCollections.
                 observableArrayList();
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="SELECT * FROM Supplier WHERE name LIKE ? || email"
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM Supplier WHERE name LIKE ? || email"
                 + " LIKE ? || adress LIKE ? || mobile LIKE ? || status LIKE ?";
-        PreparedStatement ps=con.prepareStatement(sql);
-        ps.setString(1, "%"+value+"%");
-        ps.setString(2, "%"+value+"%");
-        ps.setString(3, "%"+value+"%");
-        ps.setString(4, "%"+value+"%");
-        ps.setString(5, "%"+value+"%");
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, "%" + value + "%");
+        ps.setString(2, "%" + value + "%");
+        ps.setString(3, "%" + value + "%");
+        ps.setString(4, "%" + value + "%");
+        ps.setString(5, "%" + value + "%");
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             suplierList.add(new Supplier(
                     rs.getString(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getInt(6)==1?"Active" : "Inactive"
+                    rs.getInt(6) == 1 ? "Active" : "Inactive"
             ));
         }
-    return suplierList;
+        return suplierList;
     }
 
     @FXML
@@ -207,10 +199,9 @@ public class SupplierController implements Initializable {
         loadSuppliers();
         btnActiveInactive.setDisable(true);
         btnUpdate.setDisable(true);
-        
+
     }
-    
-    
+
     private void clearFielsAndLoadAgain() throws ClassNotFoundException,
             SQLException {
         setSupplierId();
@@ -242,137 +233,129 @@ public class SupplierController implements Initializable {
     private void loadSuppliers() throws ClassNotFoundException, SQLException {
         tblSupplierData.setItems(getAllSuppliers());
         tblSupplierData.getColumns().clear();
-        tblSupplierData.getColumns().addAll(colSid,colName,colEmail,colAddress,
-                colMobileNumber,colStatus);
+        tblSupplierData.getColumns().addAll(colSid, colName, colEmail, colAddress,
+                colMobileNumber, colStatus);
         setSupplierId();
     }
-    
-    public ObservableList<Supplier> getAllSuppliers() throws ClassNotFoundException, SQLException{
-        ObservableList<Supplier> supplierList=FXCollections.
+
+    public ObservableList<Supplier> getAllSuppliers() throws ClassNotFoundException, SQLException {
+        ObservableList<Supplier> supplierList = FXCollections.
                 observableArrayList();
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="SELECT * FROM Supplier";
-        PreparedStatement ps=con.prepareStatement(sql);
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM Supplier";
+        PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             supplierList.add(new Supplier(
                     rs.getString(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                   rs.getInt(6)==1?"Active" : "Inactive" 
+                    rs.getInt(6) == 1 ? "Active" : "Inactive"
             ));
-            System.out.println(rs.getString(5));
         }
-    return supplierList;
+        return supplierList;
     }
-    
-    
-    public String getSupplierId(String name) throws ClassNotFoundException, SQLException{
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="SELECT sid FROM Supplier WHERE name=?";
-        PreparedStatement ps=con.prepareStatement(sql);
+
+    public String getSupplierId(String name) throws ClassNotFoundException, SQLException {
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "SELECT sid FROM Supplier WHERE name=?";
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-                return rs.getString(1);
+        while (rs.next()) {
+            return rs.getString(1);
         }
-    return null;
+        return null;
     }
-    
-    public Supplier getSupplierFromId(String sid) throws ClassNotFoundException, SQLException{
-        Connection con=DBConnection.getInstance().getConnection();
-        Supplier sup=null;
-        String sql="SELECT * FROM Supplier WHERE sid=?";
-        PreparedStatement ps=con.prepareStatement(sql);
+
+    public Supplier getSupplierFromId(String sid) throws ClassNotFoundException, SQLException {
+        Connection con = DBConnection.getInstance().getConnection();
+        Supplier sup = null;
+        String sql = "SELECT * FROM Supplier WHERE sid=?";
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, sid);
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-                sup=new Supplier(rs.getString(1),
-                       rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getInt(6)==1?"Active" : "Inactive"
-                        
-                );
+        while (rs.next()) {
+            sup = new Supplier(rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getInt(6) == 1 ? "Active" : "Inactive"
+            );
         }
-    return sup;
+        return sup;
     }
-    
-    
-    public Supplier getSupplierFromName(String name) throws ClassNotFoundException, SQLException{
-        Connection con=DBConnection.getInstance().getConnection();
-        Supplier sup=null;
-        String sql="SELECT * FROM Supplier WHERE name=?";
-        PreparedStatement ps=con.prepareStatement(sql);
+
+    public Supplier getSupplierFromName(String name) throws ClassNotFoundException, SQLException {
+        Connection con = DBConnection.getInstance().getConnection();
+        Supplier sup = null;
+        String sql = "SELECT * FROM Supplier WHERE name=?";
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-                sup=new Supplier(rs.getString(1),
-                       rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getInt(6)==1?"Active" : "Inactive"
-                );
+        while (rs.next()) {
+            sup = new Supplier(rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getInt(6) == 1 ? "Active" : "Inactive"
+            );
         }
-    return sup;
+        return sup;
     }
-    
-    public List<String> getAllSupplierNames() throws ClassNotFoundException, SQLException{
-        List<String> supplierNames=new ArrayList<>();
+
+    public List<String> getAllSupplierNames() throws ClassNotFoundException, SQLException {
+        List<String> supplierNames = new ArrayList<>();
         for (int i = 0; i < getAllSuppliers().size(); i++) {
             supplierNames.add(getAllSuppliers().get(i).getName());
         }
         return supplierNames;
     }
-    
-    
-    
-    
-    
+
     public boolean addSupplier() throws ClassNotFoundException,
-         SQLException{
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="INSERT INTO Supplier values(?,?,?,?,?,?)";
-        PreparedStatement ps=con.prepareStatement(sql);
+            SQLException {
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "INSERT INTO Supplier values(?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, txtSid.getText());
         ps.setString(2, txtName.getText());
         ps.setString(3, txtEmail.getText());
         ps.setString(4, txtAddress.getText());
         ps.setString(5, txtMobileNumber.getText());
         ps.setString(6, "1");
-        return ps.executeUpdate()>0;
+        return ps.executeUpdate() > 0;
     }
-    
-    public void setSupplierId() throws ClassNotFoundException, SQLException{
-        Connection con=DBConnection.getInstance().getConnection();
-        String sql="SELECT sid FROM Supplier ORDER BY sid DESC LIMIT 1";
-        PreparedStatement ps=con.prepareStatement(sql);
+
+    public void setSupplierId() throws ClassNotFoundException, SQLException {
+        Connection con = DBConnection.getInstance().getConnection();
+        String sql = "SELECT sid FROM Supplier ORDER BY sid DESC LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        String supId=null;
-        if(rs.next()){
-            supId=rs.getString(1);
+        String supId = null;
+        if (rs.next()) {
+            supId = rs.getString(1);
         }
-       
-        if(supId!=null){
-            String[] temp=supId.split("S");
-            int tempNumber=Integer.parseInt(temp[1]);
+
+        if (supId != null) {
+            String[] temp = supId.split("S");
+            int tempNumber = Integer.parseInt(temp[1]);
             tempNumber++;
-            
-            if(tempNumber<10){
-                txtSid.setText("S00"+tempNumber);
-            }else if(tempNumber<100){
-                txtSid.setText("S0"+tempNumber);
-            }else{
-                txtSid.setText("S"+tempNumber);
+
+            if (tempNumber < 10) {
+                txtSid.setText("S00" + tempNumber);
+            } else if (tempNumber < 100) {
+                txtSid.setText("S0" + tempNumber);
+            } else {
+                txtSid.setText("S" + tempNumber);
             }
-        }else{
+        } else {
             txtSid.setText("S001");
         }
-        
+
         //Clearing the fields
         txtName.clear();
         txtAddress.clear();
@@ -382,24 +365,24 @@ public class SupplierController implements Initializable {
 
     @FXML
     private void tblSupplierData_OnMouseClicked(MouseEvent event) {
-        if(tblSupplierData.getSelectionModel().getSelectedIndex()>=0){
+        if (tblSupplierData.getSelectionModel().getSelectedIndex() >= 0) {
             btnActiveInactive.setDisable(false);
-        btnUpdate.setDisable(false);
-        Supplier selected=tblSupplierData.getSelectionModel().getSelectedItem();
-        txtSid.setText(selected.getSid());
-        txtName.setText(selected.getName());
-        txtAddress.setText(selected.getAddress());
-        txtEmail.setText(selected.getEmail());
-        txtMobileNumber.setText(selected.getMobile());
-        }else{
+            btnUpdate.setDisable(false);
+            Supplier selected = tblSupplierData.getSelectionModel().getSelectedItem();
+            txtSid.setText(selected.getSid());
+            txtName.setText(selected.getName());
+            txtAddress.setText(selected.getAddress());
+            txtEmail.setText(selected.getEmail());
+            txtMobileNumber.setText(selected.getMobile());
+        } else {
             AlertBox.showErrorMessage("Error", "Try a correct Selection");
         }
-        
+
     }
 
     @FXML
     private void txtName_onKeyPressed(KeyEvent event) {
-        if(TextFieldEventsHandling.isEnterPressed(event)){
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
             txtEmail.requestFocus();
         }
         TextFieldEventsHandling.clearIfEscapeIsPressed(event, txtName);
@@ -412,16 +395,16 @@ public class SupplierController implements Initializable {
 
     @FXML
     private void txtEmail_onKeyPressed(KeyEvent event) {
-        if(TextFieldEventsHandling.isEnterPressed(event)){
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
             txtAddress.requestFocus();
         }
         TextFieldEventsHandling.clearIfEscapeIsPressed(event, txtEmail);
-        
+
     }
 
     @FXML
     private void txtAddress_onKeyPressed(KeyEvent event) {
-        if(TextFieldEventsHandling.isEnterPressed(event)){
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
             txtMobileNumber.requestFocus();
         }
         TextFieldEventsHandling.clearIfEscapeIsPressed(event, txtMobileNumber);
@@ -429,7 +412,7 @@ public class SupplierController implements Initializable {
 
     @FXML
     private void txtMobileNumber_onKeyPressed(KeyEvent event) {
-        if(TextFieldEventsHandling.isEnterPressed(event)){
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
             btnCreate.requestFocus();
         }
         TextFieldEventsHandling.clearIfEscapeIsPressed(event, txtMobileNumber);
@@ -442,48 +425,48 @@ public class SupplierController implements Initializable {
 
     @FXML
     private void btnCreate_onKeyPressed(KeyEvent event) {
-        if(TextFieldEventsHandling.isEnterPressed(event)){
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
             btnCreate.fire();
         }
     }
 
     ObservableList<ReportTableModel> getPayableSuppliers() throws ClassNotFoundException, SQLException {
-        ObservableList<ReportTableModel> list=FXCollections.observableArrayList();
+        ObservableList<ReportTableModel> list = FXCollections.observableArrayList();
         Connection connection = DBConnection.getInstance().getConnection();
-        PreparedStatement ps=connection.prepareStatement("SELECT IFNULL(SUM(totalAmount),0) FROM GRNMaster WHERE sid=?");
-        PreparedStatement ps1=connection.prepareStatement("SELECT IFNULL(SUM(amount),0) FROM Payment WHERE sid=?");
-        PreparedStatement ps2=connection.prepareStatement("SELECT IFNULL(SUM(totalReturnAmount),0) FROM SupplierReturn WHERE sid=?");
-        PreparedStatement ps3=connection.prepareStatement("SELECT IFNULL(SUM(Amount),0) FROM DebitNote WHERE sid=?");
-        for (int i = 0; i <getAllSuppliers().size(); i++) {
-            Supplier supplier=getAllSuppliers().get(i);
-            String supId=supplier.getSid();
+        PreparedStatement ps = connection.prepareStatement("SELECT IFNULL(SUM(totalAmount),0) FROM GRNMaster WHERE sid=?");
+        PreparedStatement ps1 = connection.prepareStatement("SELECT IFNULL(SUM(amount),0) FROM Payment WHERE sid=?");
+        PreparedStatement ps2 = connection.prepareStatement("SELECT IFNULL(SUM(totalReturnAmount),0) FROM SupplierReturn WHERE sid=?");
+        PreparedStatement ps3 = connection.prepareStatement("SELECT IFNULL(SUM(Amount),0) FROM DebitNote WHERE sid=?");
+        for (int i = 0; i < getAllSuppliers().size(); i++) {
+            Supplier supplier = getAllSuppliers().get(i);
+            String supId = supplier.getSid();
             ps.setString(1, supId);
-            ps1.setString(1,supId);
-            ps2.setString(1,supId);
-            ps3.setString(1,supId);
-            ResultSet rs= ps.executeQuery();
-            ResultSet rs1= ps1.executeQuery();
-            ResultSet rs2= ps2.executeQuery();
-            ResultSet rs3= ps3.executeQuery();
-            double totalSupplierAmount=0;
-            double totalPayment=0;
-            double totalReturn=0;
-            double totalDebitNote=0;
-            if(rs.next()){
-                 totalSupplierAmount=rs.getDouble(1);
+            ps1.setString(1, supId);
+            ps2.setString(1, supId);
+            ps3.setString(1, supId);
+            ResultSet rs = ps.executeQuery();
+            ResultSet rs1 = ps1.executeQuery();
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSet rs3 = ps3.executeQuery();
+            double totalSupplierAmount = 0;
+            double totalPayment = 0;
+            double totalReturn = 0;
+            double totalDebitNote = 0;
+            if (rs.next()) {
+                totalSupplierAmount = rs.getDouble(1);
             }
-            if(rs1.next()){
-                 totalPayment=rs1.getDouble(1);
+            if (rs1.next()) {
+                totalPayment = rs1.getDouble(1);
             }
-            if(rs2.next()){
-                 totalReturn=rs2.getDouble(1);
+            if (rs2.next()) {
+                totalReturn = rs2.getDouble(1);
             }
-            if(rs3.next()){
-                 totalDebitNote=rs3.getDouble(1);
+            if (rs3.next()) {
+                totalDebitNote = rs3.getDouble(1);
             }
-            double total=totalSupplierAmount-totalPayment-totalReturn+totalDebitNote;
-            
-            if(total!=0){
+            double total = totalSupplierAmount - totalPayment - totalReturn + totalDebitNote;
+
+            if (total != 0) {
                 list.add(new ReportTableModel(supplier.getName(),
                         supId,
                         String.format("%,.2f", total),
@@ -494,16 +477,16 @@ public class SupplierController implements Initializable {
                 ));
             }
         }
-        
+
         return list;
     }
 
     @FXML
     private void btnActiveInactive_OnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String status = tblSupplierData.getSelectionModel().getSelectedItem().getStatus();
-        
-        if(makeActiveInactive(status)){
-                if (status.equals("Active")) {
+
+        if (makeActiveInactive(status)) {
+            if (status.equals("Active")) {
                 AlertBox.showDisplayMessage("Sucessful", txtName.getText()
                         + " is now on Inactive Mode.No GRNs can be raised from this customer now Onwards");
             } else {
@@ -518,7 +501,5 @@ public class SupplierController implements Initializable {
         }
         clearFielsAndLoadAgain();
     }
-    
-    
-    
+
 }

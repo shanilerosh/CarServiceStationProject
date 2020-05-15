@@ -6,7 +6,6 @@
 package lk.r4enterprises.system.controller;
 
 import animatefx.animation.BounceInUp;
-import animatefx.animation.FadeIn;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +32,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.r4enterprises.system.model.User;
-import lk.r4enterprises.system.view.AlertBox;
 
 /**
  *

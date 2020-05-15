@@ -81,6 +81,10 @@ public class UserController implements Initializable {
 
     @FXML
     private void txtName_onKeyPressed(KeyEvent event) {
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
+            comboRole.requestFocus();
+        }
+        TextFieldEventsHandling.clearIfEscapeIsPressed(event, txtUserName);
     }
 
     @FXML
@@ -129,7 +133,6 @@ public class UserController implements Initializable {
                 AlertBox.showDisplayMessage("Sucess", txtUserName.getText() + " updated successfully.");
             }
         } else if (!(user.getUid().equals(txtUid.getText()))) {
-            System.out.println("non admin");
             updateNonAdminsByAdmin(new User(comboRole.getSelectionModel().getSelectedItem(), txtUid.getText()));
             AlertBox.showDisplayMessage("Sucess", user.getUid() + " role has been Changed");
             txtUserName.setEditable(true);
@@ -436,10 +439,9 @@ public class UserController implements Initializable {
             AlertBox.showErrorMessage("Error", "Make a selection from the table");
         } else {
             User selectedUser = tblUserData.getSelectionModel().getSelectedItem();
-            if(selectedUser.getRole().equals("Admin")){
-            AlertBox.showErrorMessage("Wrong Choice", "You are the only Admin.You can't make your account Deactive");
-            }
-            else if (selectedUser.getStatus().equals("Active")) {
+            if (selectedUser.getRole().equals("Admin")) {
+                AlertBox.showErrorMessage("Wrong Choice", "You are the only Admin.You can't make your account Deactive");
+            } else if (selectedUser.getStatus().equals("Active")) {
                 boolean conf = AlertBox.showConfMessage(selectedUser.getUserName() + " is on Active Mode.This action will make " + selectedUser.getUserName() + " Non active.Are you sure?", "Make Deactive Confirmation");
                 if (conf) {
                     boolean makeUserActiveDeactive = makeUserActiveDeactive("Deactive", selectedUser.getUid());
@@ -475,6 +477,26 @@ public class UserController implements Initializable {
         ps.setString(1, status);
         ps.setString(2, uid);
         return ps.executeUpdate() > 0;
+    }
+
+    @FXML
+    private void comboRole_onKeyPressed(KeyEvent event) {
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
+            passwordBefore.requestFocus();
+        }
+
+    }
+
+    @FXML
+    private void passwordBefore_onKeyPressed(KeyEvent event) {
+        if (TextFieldEventsHandling.isEnterPressed(event)) {
+            passwordRetype.requestFocus();
+        }
+
+    }
+
+    @FXML
+    private void passwordRetype_onKeyPressed(KeyEvent event) {
     }
 
 }

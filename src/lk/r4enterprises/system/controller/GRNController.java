@@ -119,9 +119,9 @@ public class GRNController implements Initializable {
             Item item = new ItemController().getItemFromModel(txtsearchItems.getText());
             if (item == null) {
                 AlertBox.showErrorMessage("Error", txtsearchItems.getText() + "is not found");
-            }else if(!item.getContinuity().equals("Con")){
-                AlertBox.showErrorMessage("Error", item.getModel()+" is on Discontinued mode.Please request the admin to make it Continue in order to proceed with the GRN"); 
-            }else {
+            } else if (!item.getContinuity().equals("Con")) {
+                AlertBox.showErrorMessage("Error", item.getModel() + " is on Discontinued mode.Please request the admin to make it Continue in order to proceed with the GRN");
+            } else {
                 double supplierAmount = Double.parseDouble(txtAmount.getText());
                 double supplierQty = Double.parseDouble(txtQuantity.getText());
 
@@ -285,7 +285,6 @@ public class GRNController implements Initializable {
                             tblItemData.getItems().get(i).getQuantity(),
                             tblItemData.getItems().get(i).getUnitPrice()
                     ));
-                    System.out.println("item id=" + list.get(i).getIid());
 
                 }
 
@@ -320,7 +319,7 @@ public class GRNController implements Initializable {
                 }
 
             }
-            
+
             clearFieldsAndFocus();
         }
 
@@ -338,14 +337,10 @@ public class GRNController implements Initializable {
         ps.setString(5, grn.getSid());
         ps.setDouble(6, Double.parseDouble(txtGrnTotalValue.getText()));
         isSave = ps.executeUpdate() > 0;
-        System.out.println(" GRN place false= " + isSave);
-
         if (isSave) {
             boolean isAddedDetais = new SupplierDetailController().addItemDetail(grn.getList());
-            System.out.println(" Details place false= " + isAddedDetais);
             if (isAddedDetais) {
                 boolean isUpdated = new ItemController().updateQtyBasedOnGRN(grn.getList());
-                System.out.println(" Items false= " + isUpdated);
                 if (isUpdated) {
                     return true;
                 }
