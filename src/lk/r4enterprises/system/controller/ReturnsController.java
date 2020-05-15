@@ -515,6 +515,6 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private void txtPrice_onKeyTyped(KeyEvent event) {
-        TextFieldEventsHandling.allowOnlyNumbers(event);
+        TextFieldEventsHandling.allowOnlyNumbersAndDecimal(event);
     }
 }

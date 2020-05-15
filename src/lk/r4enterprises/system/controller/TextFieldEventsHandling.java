@@ -29,6 +29,14 @@ public class TextFieldEventsHandling {
     public static void allowOnlyNumbers(KeyEvent evnt) {
         String character = evnt.getCharacter();
         char charAt = character.charAt(0);
+        if (!Character.isDigit(charAt)) {
+            evnt.consume();
+        }
+    }
+    
+    public static void allowOnlyNumbersAndDecimal(KeyEvent evnt) {
+        String character = evnt.getCharacter();
+        char charAt = character.charAt(0);
         if (Character.isLetter(charAt) && !evnt.isAltDown()) {
             evnt.consume();
         }
@@ -42,17 +50,6 @@ public class TextFieldEventsHandling {
 
     public static boolean isEnterPressed(KeyEvent event) {
         return event.getCode().equals(KeyCode.ENTER);
-    }
-
-    public static void AllowOnlyDecimal(TextField text) {
-        text.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!newValue.matches("[0-9]+\\.")){
-                    text.setText(oldValue);
-                }
-            }
-        });
     }
 
 }

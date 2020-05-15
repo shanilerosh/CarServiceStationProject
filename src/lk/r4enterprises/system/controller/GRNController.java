@@ -421,7 +421,7 @@ public class GRNController implements Initializable {
 
     @FXML
     private void txtAmount_OnKeyTyped(KeyEvent event) {
-        TextFieldEventsHandling.allowOnlyNumbers(event);
+        TextFieldEventsHandling.allowOnlyNumbersAndDecimal(event);
     }
 
     @FXML

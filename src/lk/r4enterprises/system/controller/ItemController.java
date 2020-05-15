@@ -479,7 +479,7 @@ public class ItemController implements Initializable {
 
     @FXML
     private void txtUnitPrice_onKeyTyped(KeyEvent event) {
-        TextFieldEventsHandling.allowOnlyNumbers(event);
+        TextFieldEventsHandling.allowOnlyNumbersAndDecimal(event);
     }
 
     @FXML

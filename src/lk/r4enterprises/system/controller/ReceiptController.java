@@ -80,7 +80,7 @@ public class ReceiptController implements Initializable{
     private TableColumn<ReceiptTableModel, Double> colAmount;
     @FXML
     private Text txtReceipt;
-    private Text txtDate;
+    
     @FXML
     private TextField txtSearchReceipts;
     @FXML
@@ -409,7 +409,6 @@ public class ReceiptController implements Initializable{
         TextFieldEventsHandling.allowOnlyLettersAndCharacters(event);
     }
 
-    @FXML
     private void txtAmount_onKeyPressed(KeyEvent event) {
         if(TextFieldEventsHandling.isEnterPressed(event)){
             comboPaymentType.requestFocus();
@@ -419,7 +418,7 @@ public class ReceiptController implements Initializable{
 
     @FXML
     private void txtAmount_onKeyTyped(KeyEvent event) {
-        TextFieldEventsHandling.allowOnlyNumbers(event);
+       TextFieldEventsHandling.allowOnlyNumbersAndDecimal(event);
         
        
     }
@@ -460,15 +459,13 @@ public class ReceiptController implements Initializable{
     }
 
     @FXML
-    private void txtAmount_onTextChanged(InputMethodEvent event) {
-        
+    private void txtAmount_onKeyPresed(KeyEvent event) {
+        if(TextFieldEventsHandling.isEnterPressed(event)){
+            comboPaymentType.requestFocus();
+        }
+        TextFieldEventsHandling.clearIfEscapeIsPressed(event, txtAmount);
     }
 
-    @FXML
-    private void txtAmount_onKeyReleased(KeyEvent event) {
-        
-    }
-    
 
     
 }

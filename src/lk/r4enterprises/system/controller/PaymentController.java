@@ -437,7 +437,7 @@ public class PaymentController implements Initializable {
 
     @FXML
     private void txtAmount_onKeyTyped(KeyEvent event) {
-        TextFieldEventsHandling.allowOnlyNumbers(event);
+        TextFieldEventsHandling.allowOnlyNumbersAndDecimal(event);
         
         
     }

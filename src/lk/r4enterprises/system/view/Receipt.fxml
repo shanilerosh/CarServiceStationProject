@@ -36,7 +36,7 @@
                <font>
                   <Font name="Roboto Condensed Regular" size="15.0" />
                </font></TextField>
-            <TextField fx:id="txtAmount" layoutX="346.0" layoutY="56.0" onInputMethodTextChanged="#txtAmount_onTextChanged" onKeyPressed="#txtAmount_onKeyPressed" onKeyReleased="#txtAmount_onKeyReleased" onKeyTyped="#txtAmount_onKeyTyped" prefHeight="31.0" prefWidth="310.0" promptText="Amount">
+            <TextField fx:id="txtAmount" layoutX="346.0" layoutY="56.0" onKeyPressed="#txtAmount_onKeyPresed" onKeyTyped="#txtAmount_onKeyTyped" prefHeight="31.0" prefWidth="310.0" promptText="Amount">
                <font>
                   <Font name="Roboto Condensed Regular" size="15.0" />
                </font>
