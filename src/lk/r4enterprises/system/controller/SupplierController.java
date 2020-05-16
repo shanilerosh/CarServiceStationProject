@@ -87,9 +87,12 @@ public class SupplierController implements Initializable {
     private void btnCreate_OnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
         if (txtName.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtName);
-        } else if (txtMobileNumber.getText().isEmpty()) {
+        }else if (txtMobileNumber.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtMobileNumber);
-        } else if (addSupplier()) {
+        }else if (txtMobileNumber.getText().length() != 10) {
+                AnimateComponent.animateEmptyField(txtMobileNumber);
+                AlertBox.showErrorMessage("Error", "Your mobile Number should have 10 Numbers.Try again");
+        }else if (addSupplier()) {
             tblSupplierData.getItems().add(
                     new Supplier(
                             txtSid.getText(),
@@ -127,6 +130,9 @@ public class SupplierController implements Initializable {
                 AnimateComponent.animateEmptyField(txtName);
             } else if (txtMobileNumber.getText().isEmpty()) {
                 AnimateComponent.animateEmptyField(txtMobileNumber);
+            }else if (txtMobileNumber.getText().length() != 10) {
+                AnimateComponent.animateEmptyField(txtMobileNumber);
+                AlertBox.showErrorMessage("Error", "Your mobile Number should have 10 Numbers.Try again");
             } else {
                 updateSupplier();
                 AlertBox.showDisplayMessage("Sucessful", txtSid.getText()

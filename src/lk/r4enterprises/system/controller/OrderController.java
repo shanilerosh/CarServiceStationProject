@@ -299,6 +299,9 @@ public class OrderController implements Initializable {
             AnimateComponent.animateEmptyField(txtName);
         } else if (txtMobile.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtMobile);
+        } else if (txtMobile.getText().length() != 10) {
+            AnimateComponent.animateEmptyField(txtMobile);
+            AlertBox.showErrorMessage("Error", "Your mobile Number should have 10 Numbers.Try again");
         } else if (txtAddress.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtAddress);
         } else if (txtVehicleRegistrationNumber.getText().isEmpty()) {
@@ -712,33 +715,5 @@ public class OrderController implements Initializable {
         JasperViewer.viewReport(jp, false);
     }
 
-    ObservableList<ReportTableModel> getProfitPerOrder(String dateFrom, String dateTo) throws ClassNotFoundException, SQLException {
-        ObservableList<ReportTableModel> list = FXCollections.observableArrayList();
-        PreparedStatement ps = DBConnection.getInstance().getConnection().prepareStatement("SELECT OrderDetail.oid,Order_.amount,Order_.dateOfOrder,Order_.cid,OrderDetail.iid,OrderDetail.quantity,OrderDetail.itemPrice,(AVG(SupplierDetail.amount)*OrderDetail.quantity) AS expenses,Order_.amount-(OrderDetail.quantity*AVG(SupplierDetail.amount)) AS Profit FROM Item INNER JOIN SupplierDetail ON SupplierDetail.iid=Item.iid INNER JOIN OrderDetail ON OrderDetail.iid=Item.iid INNER JOIN Order_ ON OrderDetail.oid=Order_.oid WHERE Order_.dateOfOrder BETWEEN ? AND ? GROUP BY OrderDetail.oid, OrderDetail.iid;");
-        ps.setString(1, dateFrom);
-        ps.setString(2, dateTo);
-        ResultSet rs = ps.executeQuery();
-
-        ListIterator<ReportTableModel> iterator = list.listIterator();
-        while (rs.next()) {
-            ReportTableModel model = new ReportTableModel(rs.getString(1),
-                    new CustomerController().getCustomerNameFromId(
-                            rs.getString(4)),
-                    rs.getString(3),
-                    rs.getString(9),
-                    String.format("%,.2f", rs.getDouble(2)),
-                    rs.getString(8)
-            );
-            iterator.add(model);
-            if (iterator.previous().getOid().equals(model.getOid())) {
-                model.setAmount("123");
-                iterator.remove();
-            }
-            iterator.next();
-        }
-
-        return list;
-
-    }
 
 }

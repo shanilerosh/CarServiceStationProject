@@ -216,6 +216,9 @@ public class CustomerController implements Initializable {
             AnimateComponent.animateEmptyField(txtName);
         } else if (txtMobileNumber.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtMobileNumber);
+        } else if (txtMobileNumber.getText().length() != 10) {
+            AnimateComponent.animateEmptyField(txtMobileNumber);
+            AlertBox.showErrorMessage("Error", "Your mobile Number should have 10 Numbers.Try again");
         } else {
             String name = txtName.getText();
             String address = txtAddress.getText();
@@ -227,7 +230,7 @@ public class CustomerController implements Initializable {
                 if (addCustomer(newCustomer)) {
                     tblCustomerData.getItems().add(newCustomer);
                     AlertBox.showDisplayMessage("Successful", txtName.getText()
-                            + "added Succesfully");
+                            + " added Succesfully");
                     loadCustomers();
                 } else {
                     AlertBox.showErrorMessage("Error", "Try again");
@@ -318,6 +321,9 @@ public class CustomerController implements Initializable {
             AnimateComponent.animateEmptyField(txtName);
         } else if (txtMobileNumber.getText().isEmpty()) {
             AnimateComponent.animateEmptyField(txtMobileNumber);
+        } else if (txtMobileNumber.getText().length() != 10) {
+            AnimateComponent.animateEmptyField(txtMobileNumber);
+            AlertBox.showErrorMessage("Error", "Your mobile Number should have 10 Numbers.Try again");
         } else {
             updateCustomer();
             AlertBox.showDisplayMessage("Sucessful",
@@ -356,7 +362,7 @@ public class CustomerController implements Initializable {
                     rs.getString(3),
                     rs.getString(2),
                     rs.getString(4),
-                    rs.getInt(5)==1 ? "Active" : "Inactive"
+                    rs.getInt(5) == 1 ? "Active" : "Inactive"
             ));
         }
         return customerList;
@@ -383,7 +389,7 @@ public class CustomerController implements Initializable {
 
     public boolean updateCustomerFromName(Customer customer) throws SQLException, ClassNotFoundException {
         PreparedStatement ps = DBConnection.getInstance().getConnection().
-        prepareStatement("UPDATE Customer set adress=?,mobileNumber=? WHERE name=?");
+                prepareStatement("UPDATE Customer set adress=?,mobileNumber=? WHERE name=?");
         ps.setString(1, customer.getAddress());
         ps.setString(2, customer.getMobileNumber());
         ps.setString(3, customer.getName());
