@@ -374,6 +374,7 @@ public class CustomerController implements Initializable {
         tblCustomerData.getSelectionModel().clearSelection();
         btnActiveInactive.setDisable(true);
         btnUpdate.setDisable(true);
+        clearFielsAndLoadAgain();
     }
 
     private void clearFielsAndLoadAgain() throws ClassNotFoundException,

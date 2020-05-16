@@ -290,9 +290,11 @@ public class ReturnsController implements Initializable {
                         list
                 );
                 
+                
+                boolean upateQty=new ItemController().updateQtyForReturnInwards(list);
                 boolean isSave = new CustomerReturnsConroller().addCustomerReturns(customerReturn);
                 
-                if(isSave){
+                if(isSave && upateQty){
                    connection.commit();
                    AlertBox.showDisplayMessage("Success", txtReturnNumber.getText()+" has been created");
                 }else{
@@ -334,10 +336,10 @@ public class ReturnsController implements Initializable {
                         Double.parseDouble(txtTotalValue.getText()),
                         list
                 );
-                
+                boolean updateQty=new ItemController().updateQtyForReturnOutwards(list);
                 boolean isSave = new SupplierReturnsController().addSupplierReturns(supplierReturn);
             
-                if(isSave){
+                if(isSave && updateQty){
                    connection.commit();
                    AlertBox.showDisplayMessage("Success", txtReturnNumber.getText()+" has been created");
                 }else{
