@@ -583,7 +583,7 @@ public class ReportController implements Initializable {
             } 
         }
         else{
-            AlertBox.showDisplayMessage("Data is loaded to the below table", "Data into Table");
+            AlertBox.showDisplayMessage("Successefully Loaded", "Data is loaded to the below table");
         }
     }
 
