@@ -22,7 +22,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-Copyright <2019> <ShanilMiranda>
+Copyright <2020> <ShanilMiranda>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -35,4 +35,4 @@ Clone the Source Code from github..
 
 Hope someone finds this helpful someday...! :wink:
 
-#### Developed by Shanil Miranda ©-2019
+#### Developed by Shanil Miranda © - 2020
