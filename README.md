@@ -6,22 +6,16 @@ This Car Service management System was developed based on the requirements of th
 
 Better communication with the internal process and employees
 
-```bash
-pip install foobar
-```
+## Code style
+[![js-standard-style](https://img.shields.io/azure-devops/coverage/swellaby/opensource/25.svg)](https://google.com)
+ 
 
-## Usage
+## Tech/framework used
+* Java
+* Java FX
+* MySQL
+* Jasper Reports
 
-```Java
-```Java Fx
-```MySQL
-```Jasper Reports
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -36,3 +30,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+Clone the Source Code from github..
+
+Hope someone finds this helpful someday...! :wink:
+
+#### Developed by Shanil Miranda ©-2019
