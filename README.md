@@ -15,6 +15,8 @@ Better communication with the internal process and employees
 * Java FX
 * MySQL
 * Jasper Reports
+* AnimateFX
+* ControlFX
 
 ## Screenshots
 ![Dshboard](https://user-images.githubusercontent.com/56855063/92522677-a5012100-f20e-11ea-9ea1-77e23564ef87.png)
